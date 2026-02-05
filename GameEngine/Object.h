@@ -35,6 +35,7 @@ namespace df {
 		Vector m_direction;		// Direction vector
 		float m_speed;			// Object speed in direction.
 		Solidness m_solidness;	// Solidness of object, used for collision detection.
+		bool m_no_soft;			// True if object should not cause soft collisions (default is false).	
 
 	public:
 		// Construct Object. Set default parameters and
@@ -110,6 +111,11 @@ namespace df {
 		// Return objects solidness
 		Solidness getSolidness() const;
 
+		// Set 'no soft' setting (true -- cannot move onto SOFT object).
+		void setNoSoft(bool new_no_soft = true);
+
+		// Get 'no soft' setting (true -- cannot move onto SOFT Objects).
+		bool getNoSoft() const;
 
 	}; // end class Object
 } // end namespace df

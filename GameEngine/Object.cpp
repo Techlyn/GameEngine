@@ -29,6 +29,7 @@ namespace df {
 		m_direction = Vector();
 		m_speed = 0.0;
 		m_solidness = Solidness::HARD;
+		m_no_soft = false;
 
 		WorldManager::getInstance().insertObject(this);
 
@@ -143,6 +144,14 @@ namespace df {
 
 	Solidness Object::getSolidness() const {
 		return m_solidness;
+	}
+
+	void Object::setNoSoft(bool new_no_soft) {
+		m_no_soft = new_no_soft;
+	}
+
+	bool Object::getNoSoft() const {
+		return m_no_soft;
 	}
 
 

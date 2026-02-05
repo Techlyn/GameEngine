@@ -154,7 +154,7 @@ namespace df {
 		Vector starting_pos = pos;
 		switch (just) {
 		case CENTER_JUSTIFIED:
-			starting_pos.setX(pos.getX() - str.size() / 2);
+			starting_pos.setX(pos.getX() - static_cast<float>(str.size()) / 2);
 			break;
 		case RIGHT_JUSTIFIED:
 			starting_pos.setX(pos.getX() - str.size());

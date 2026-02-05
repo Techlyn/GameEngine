@@ -33,7 +33,7 @@ namespace df {
 		Object* getObject1() const;
 
 		// Set object being collided with
-		Object setObject2(Object* p_new_o2);
+		void setObject2(Object* p_new_o2);
 
 		// Get object being collided with
 		Object* getObject2() const;

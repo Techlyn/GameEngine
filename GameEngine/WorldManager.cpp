@@ -5,6 +5,7 @@
 // engine includes
 #include "WorldManager.h"
 #include "Utility.h"
+#include "EventCollision.h"
 
 namespace df {
 
@@ -169,6 +170,39 @@ return m_updates.insert(p_o);
 			}
 		}
 		return collision_list;
+	}
+
+	int WorldManager::moveObject(Object* p_o, Vector where) {
+		if (p_o->isSolid()) {
+			ObjectList list = getCollisions(p_o, where);
+			if (!list.isEmpty()) {
+				bool do_move = true;
+				for (int i = 0; i < list.getCount(); i++) {
+					Object* p_temp_o = list[i];
+					// Create Collision event.
+					EventCollision c(p_o, p_temp_o, where);
+
+					// Send both to Objects
+					p_o->eventHandler(&c);
+					p_temp_o->eventHandler(&c);
+
+					// if either object is HARD, do not move.
+					if (p_o->getSolidness() == Solidness::HARD || p_temp_o->getSolidness() == Solidness::HARD) {
+						do_move = false;
+					}
+					// if Object does not want to move onto soft objects, don't move.
+					if (p_o->getNoSoft() && p_temp_o->getSolidness() == Solidness::SOFT) {
+						do_move = false;
+					}
+				}
+				if (do_move == false)
+					return -1;
+			}
+		}
+
+		// if here, no collision between two HARD objects so allow move.
+		p_o->setPosition(where);
+		return 0;
 	}
 
 }
