@@ -19,6 +19,8 @@ namespace df {
 
 	class Object {
 		int m_altitude;		//0 to MAX supported (lower drawn first)
+		Vector m_direction; // Direction vector
+		float m_speed;		// Object speed in direction.
 
 	public:
 		// Construct Object. Set default parameters and
@@ -76,6 +78,15 @@ namespace df {
 
 		// Set direction and speed of Object.
 		void setVelocity(Vector new_velocity);
+
+		// Get velocity of Object based on direction and speed.
+		Vector getVelocity() const;
+
+		// Predict Object position based on speed and direction.
+		// Return predicted position
+		Vector predictPosition() const;
+
+		
 
 
 	private:
