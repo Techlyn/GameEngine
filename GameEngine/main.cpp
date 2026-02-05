@@ -10,6 +10,8 @@
 #include "Object.h"
 #include "EventMouse.h"
 #include "EventKeyboard.h"
+#include "EventOut.h"
+#include "EventCollision.h"
 
 int displayTest();
 void displayManagerTest();
@@ -18,7 +20,8 @@ void gameManagerTest();
 class TestObject : public df::Object {
 public:
 	TestObject();
-	int draw(void) override;
+	void out();
+	int draw() override;
 	int eventHandler(const df::Event* p_e) override;
 };
 
@@ -26,37 +29,35 @@ TestObject::TestObject() {
 	setType("TestObject");
 	setAltitude(df::MAX_ALTITUDE);
 
-	df::Vector p(15, 20);
+	df::Vector p(15, 8);
+
+	setVelocity(df::Vector(0.1, 0));
+
 	setPosition(p);
+
+	setSpeed(1);
 }
 
 int TestObject::eventHandler(const df::Event* p_e) {
-	if (p_e->getType() == df::MSE_EVENT) {
-		const df::EventMouse* p_mouse_event = dynamic_cast<const df::EventMouse*>(p_e);
-		if (p_mouse_event->getMouseAction() == df::MOVED) {
-			// Change location to new mouse position.
-			setPosition(p_mouse_event->getMousePosition());
-			return 1;
+	
+	if (p_e->getType() == df::OUT_EVENT) {
+		const df::EventOut* p_out_e = dynamic_cast<const df::EventOut*>(p_e);
+		if (p_out_e->getType() == df::OUT_EVENT) {
+			df::LogManager::getInstance().writeLog("%s: received OUT_EVENT", __func__);
+			out();
 		}
-	}
-		
-	if (p_e->getType() == df::KEYBOARD_EVENT) {
-		const df::EventKeyboard* p_kbd_e = dynamic_cast<const df::EventKeyboard*>(p_e);
-		if (p_kbd_e->getKey() == df::Keyboard::SPACE) {
-			if (p_kbd_e->getKeyboardAction() == df::KEY_PRESSED) {
-				df::LogManager::getInstance().writeLog("%s: space key pressed", __func__);
-
-
-			}
-		}
-		return 1;
 	}
 	return 0;
 }
-	
 
-int TestObject::draw(void) {
-	return df::DisplayManager::getInstance().drawCh(getPosition(), 'x', df::RED);
+int TestObject::draw() {
+	df::DisplayManager& DM = df::DisplayManager::getInstance();
+	DM.drawCh(getPosition(), 'T', df::RED);
+	return 0;
+}
+
+void TestObject::out(){
+	df::WorldManager::getInstance().markForDelete(this);
 }
 
 int main() {

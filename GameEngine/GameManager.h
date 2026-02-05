@@ -11,7 +11,7 @@
 
 #define GM df::GameManager::getInstance();
 
-const int FRAME_TIME_DEFAULT = 16;
+const int FRAME_TIME_DEFAULT = 33;
 
 namespace df {
 

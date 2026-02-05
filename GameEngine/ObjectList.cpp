@@ -13,7 +13,7 @@ namespace df {
 	ObjectList::ObjectList()
 		: m_count(0)
 	{
-		log.writeLog(CLASS_NAME, LogManager::LOG_INFO, "%s: Created at %p", __func__, this);
+	
 
 	for (int i = 0; i < MAX_OBJECTS; i++) {
 			m_p_obj[i] = nullptr;

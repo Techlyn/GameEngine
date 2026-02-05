@@ -19,6 +19,4 @@ namespace df {
 	};
 }
 
-
-
 #endif // __EVENT_OUT_H__

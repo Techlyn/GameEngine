@@ -23,10 +23,10 @@ namespace df {
 		m_y = init_y;
 	}
 
-	Vector::Vector(int init_x, int init_y) {
+	/*Vector::Vector(int init_x, int init_y) {
 		m_x = static_cast<float>(init_x);
 		m_y = static_cast<float>(init_y);
-	}
+	}*/
 
 	
 	void Vector::setX(float new_x) {

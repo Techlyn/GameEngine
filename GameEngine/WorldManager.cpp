@@ -4,6 +4,7 @@
 
 // engine includes
 #include "WorldManager.h"
+#include "DisplayManager.h"
 #include "Utility.h"
 #include "EventCollision.h"
 #include "EventOut.h"
@@ -206,8 +207,14 @@ return m_updates.insert(p_o);
 
 		// if here, no collision between two HARD objects so allow move.
 		p_o->setPosition(where);
-		EventOut ov;
-		p_o->eventHandler(&ov);
+		Vector p = p_o->getPosition();
+		if (p.getX() < 0 || p.getX() >= df::DisplayManager::getInstance().getHorizontal() ||
+			p.getY() < 0 || p.getY() >= df::DisplayManager::getInstance().getVertical()) {
+			
+			EventOut ov;
+			p_o->eventHandler(&ov);
+		}
+		
 		return 0;
 	}
 

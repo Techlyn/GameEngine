@@ -20,7 +20,7 @@ namespace df {
 		// Create Vector with (x,y).
 		Vector(float init_x, float init_y);
 
-		Vector(int init_x, int init_y);
+		//Vector(int init_x, int init_y);
 
 		Vector();
 
