@@ -83,4 +83,43 @@ namespace df {
 		return 0;
 	}
 
+	void Object::setSpeed(float speed) {
+		m_speed = speed;
+	}
+
+	float Object::getSpeed() const{
+		return m_speed;
+	}
+
+	void Object::setDirection(Vector new_direction) {
+		m_direction = new_direction;
+	}
+
+	Vector Object::getDirection() const {
+		return m_direction;
+	}
+
+	void Object::setVelocity(Vector new_velocity) {
+		// Set speed and direction based on velocity.
+		m_speed = new_velocity.getMagnitude();
+		m_direction = new_velocity.normalize();
+	}
+
+	Vector Object::getVelocity() const {
+		// Set velocity based on speed and direction
+		Vector v = m_direction;
+		v.scale(m_speed);
+		return v;
+	}
+
+	Vector Object::predictPosition() const {
+
+		// Adds velocity to position
+		Vector new_pos = m_position + getVelocity();
+		// Returns new position
+		return new_pos;
+	}
+
+
+
 }

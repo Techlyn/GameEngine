@@ -109,6 +109,14 @@ namespace df {
 	}
 
 	void WorldManager::draw() {
+
+		for (int i = 0; i < m_updates.getCount(); i++) {
+			Vector new_pos = m_updates[i]->predictPosition();
+			if (new_pos != m_updates[i]->getPosition()){
+				moveObject(m_updates[i], new_pos);
+			}
+		}
+
 		for (int alt = 0; alt <= MAX_ALTITUDE; alt++) {
 			for (int i = 0; i < m_updates.getCount(); i++) {
 				if (m_updates[i]->getAltitude() == alt) {

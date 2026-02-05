@@ -39,10 +39,10 @@ namespace df {
 		float getMagnitude() const;
 
 		// Normalize vector
-		void normalize();
+		Vector normalize();
 
 		// Scale vector
-		void scale(float s);
+		Vector scale(float s);
 
 		// Add two Vectors. return new vector.
 		Vector operator+(const Vector& other) const;
@@ -52,7 +52,12 @@ namespace df {
 		Vector operator*(const Vector& other) const;
 		// Divides two vectors, returns new vector.
 		Vector operator/(const Vector& other) const;
-
+		// Asign the value of
+		Vector operator=(const Vector& other) ;
+		// Is not equal to..
+		bool operator!=(const Vector& other);
+		// is equal to..
+		bool operator==(const Vector& other);
 	};
 }
 #endif // __VECTOR_H__

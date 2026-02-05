@@ -18,9 +18,16 @@ namespace df {
 	
 
 	class Object {
-		int m_altitude;		//0 to MAX supported (lower drawn first)
-		Vector m_direction; // Direction vector
-		float m_speed;		// Object speed in direction.
+
+		static LogManager& log;
+		std::string CLASS_NAME = "Object";
+
+		int m_id;			 // Object unique identifier
+		std::string m_type;  // Object type
+		Vector m_position;   // Position of object
+		int m_altitude;		 // 0 to MAX supported (lower drawn first)
+		Vector m_direction;  // Direction vector
+		float m_speed;		 // Object speed in direction.
 
 	public:
 		// Construct Object. Set default parameters and
@@ -86,18 +93,6 @@ namespace df {
 		// Return predicted position
 		Vector predictPosition() const;
 
-		
-
-
-	private:
-
-		static LogManager& log;
-		std::string CLASS_NAME = "Object";
-
-		int m_id;
-		std::string m_type;
-		Vector m_position;
-		
 
 	}; // end class Object
 } // end namespace df

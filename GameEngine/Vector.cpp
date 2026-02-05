@@ -58,17 +58,20 @@ namespace df {
 		return mag;
 	}
 
-	void Vector::normalize() {
+	Vector Vector::normalize() {
+		Vector v = *this;
 		float length = getMagnitude();
 		if (length > 0) {
-			m_x = m_x / length;
-			m_y = m_y / length;
+			v.m_x = m_x / length;
+			v.m_y = m_y / length;
 		}
+		return v;
 	}
 
-	void Vector::scale(float s) {
+	Vector Vector::scale(float s) {
 		m_x = m_x * s;
 		m_y = m_y * s;
+		return *this;
 	}
 
 	Vector Vector::operator+(const Vector& other) const {
@@ -97,6 +100,22 @@ namespace df {
 		v.m_x = m_x / other.m_x;
 		v.m_y = m_y / other.m_y;
 		return v;
+	}
+
+	Vector Vector::operator=(const Vector& other) {
+		if (this != &other) {
+			m_x = other.m_x;
+			m_y = other.m_y;
+		}
+		return *this;
+	}
+
+	bool Vector::operator!=(const Vector& other) {
+		return (m_x != other.m_x) || (m_y != other.m_y);
+	}
+
+	bool Vector::operator==(const Vector& other) {
+		return (m_x == other.m_x) && (m_y == other.m_y);
 	}
 
 }
