@@ -207,6 +207,7 @@ return m_updates.insert(p_o);
 
 		// if here, no collision between two HARD objects so allow move.
 		p_o->setPosition(where);
+		//temp boundary check, if object goes out of bounds, send out event to object.
 		Vector p = p_o->getPosition();
 		if (p.getX() < 0 || p.getX() >= df::DisplayManager::getInstance().getHorizontal() ||
 			p.getY() < 0 || p.getY() >= df::DisplayManager::getInstance().getVertical()) {
