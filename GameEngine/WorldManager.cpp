@@ -6,6 +6,7 @@
 #include "WorldManager.h"
 #include "Utility.h"
 #include "EventCollision.h"
+#include "EventOut.h"
 
 namespace df {
 
@@ -109,6 +110,14 @@ return m_updates.insert(p_o);
 
 
 	void WorldManager::update() {
+
+		for (int i = 0; i < m_updates.getCount(); i++) {
+			Vector new_pos = m_updates[i]->predictPosition();
+			if (new_pos != m_updates[i]->getPosition()) {
+				moveObject(m_updates[i], new_pos);
+			}
+		}
+
 		for (int i = 0; i < m_deletions.getCount(); i++) {
 			delete m_deletions[i];
 		}
@@ -118,12 +127,7 @@ return m_updates.insert(p_o);
 
 	void WorldManager::draw() {
 
-		for (int i = 0; i < m_updates.getCount(); i++) {
-			Vector new_pos = m_updates[i]->predictPosition();
-			if (new_pos != m_updates[i]->getPosition()) {
-				moveObject(m_updates[i], new_pos);
-			}
-		}
+		
 
 		for (int alt = 0; alt <= MAX_ALTITUDE; alt++) {
 			for (int i = 0; i < m_updates.getCount(); i++) {
@@ -202,6 +206,8 @@ return m_updates.insert(p_o);
 
 		// if here, no collision between two HARD objects so allow move.
 		p_o->setPosition(where);
+		EventOut ov;
+		p_o->eventHandler(&ov);
 		return 0;
 	}
 
