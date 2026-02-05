@@ -124,11 +124,11 @@ namespace df {
 
 
 	void LogManager::writeLog(const char* fmt, ...){
-		Utility util;
+		
 		if (m_p_f != NULL) {
-			fprintf(m_p_f, "%s:: ", util.getTimeString());
+			fprintf(m_p_f, "%s:: ", Utility::getTimeString());
 		}
-		fprintf(stderr, "%s:: ", util.getTimeString());
+		fprintf(stderr, "%s:: ", Utility::getTimeString());
 
 		va_list args;
 		va_start(args, fmt);

@@ -125,5 +125,8 @@
     <ClInclude Include="EventMouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EventCollision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

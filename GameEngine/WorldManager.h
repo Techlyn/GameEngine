@@ -34,6 +34,8 @@ namespace df {
 		ObjectList m_updates;	// All Objects in world to update.
 		ObjectList m_deletions;  // All Objects in world to delete.
 
+		
+
 
 	public:
 
@@ -69,6 +71,18 @@ namespace df {
 		// Indicate Object is to be deleted at end of current game loop.
 		// Return 0 if ok, else -1
 		int markForDelete(Object* p_o);
+
+		// Return list of Objects collided with at position 'where'.
+		// Collisions only with solid objects.
+		// Does not consider if p_o is solid or not.
+		ObjectList getCollisions(const Object* p_o, Vector where);
+
+		// Move Object.
+		// If collision with solid, send collision events.
+		// If no collsion with solid, move ok else don't move Object.
+		// If Object Spectral, move ok.
+		// Return 0 if move ok, else -1 if collision with solid.
+		int moveObject(Object* p_o, Vector where);
 
 	};
 

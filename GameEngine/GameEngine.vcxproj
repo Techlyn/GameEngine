@@ -171,6 +171,7 @@
     <ClInclude Include="Colour.h" />
     <ClInclude Include="DisplayManager.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="EventCollision.h" />
     <ClInclude Include="EventKeyboard.h" />
     <ClInclude Include="EventMouse.h" />
     <ClInclude Include="EventStep.h" />

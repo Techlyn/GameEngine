@@ -15,6 +15,12 @@
 
 namespace df {
 
+	enum Solidness {
+		HARD,		// Object causes collisions, and impedes. (object default)
+		SOFT,		// Object causes collisions, but does not impede.
+		SPECTRAL,	// Object doesn't cause collisions.
+	};
+
 	
 
 	class Object {
@@ -22,12 +28,13 @@ namespace df {
 		static LogManager& log;
 		std::string CLASS_NAME = "Object";
 
-		int m_id;			 // Object unique identifier
-		std::string m_type;  // Object type
-		Vector m_position;   // Position of object
-		int m_altitude;		 // 0 to MAX supported (lower drawn first)
-		Vector m_direction;  // Direction vector
-		float m_speed;		 // Object speed in direction.
+		int m_id;				// Object unique identifier
+		std::string m_type;		// Object type
+		Vector m_position;		// Position of object
+		int m_altitude;			// 0 to MAX supported (lower drawn first)
+		Vector m_direction;		// Direction vector
+		float m_speed;			// Object speed in direction.
+		Solidness m_solidness;	// Solidness of object, used for collision detection.
 
 	public:
 		// Construct Object. Set default parameters and
@@ -92,6 +99,16 @@ namespace df {
 		// Predict Object position based on speed and direction.
 		// Return predicted position
 		Vector predictPosition() const;
+
+		// True if HARD or SOFT, else false.
+		bool isSolid() const;
+
+		// Set object solidness, which checks for consistency.
+		// Return 0 if ok, else -1.
+		int setSolidness(Solidness new_solid);
+
+		// Return objects solidness
+		Solidness getSolidness() const;
 
 
 	}; // end class Object

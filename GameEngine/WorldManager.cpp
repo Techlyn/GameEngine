@@ -1,4 +1,10 @@
+//
+// WorldManager.h
+//
+
+// engine includes
 #include "WorldManager.h"
+#include "Utility.h"
 
 namespace df {
 
@@ -6,6 +12,7 @@ namespace df {
 	
 
 	WorldManager::WorldManager() {
+		
 		
 
 		log.writeLog(CLASS_NAME, LogManager::LOG_INFO, "%s: created at %p", __func__, this);
@@ -56,9 +63,9 @@ namespace df {
 		if (!isStarted()) return logAndReturn(LogManager::LOG_ERROR, "WorldManager not started");
 		if (p_o == nullptr) return logAndReturn(LogManager::LOG_ERROR, "Null object pointer");
 		if (m_updates.isFull()) return logAndReturn(LogManager::LOG_ERROR, "Update list is full");
-		
-		//success path, updates the list with the object
-		return m_updates.insert(p_o);
+
+//success path, updates the list with the object
+return m_updates.insert(p_o);
 	}
 
 	int WorldManager::removeObject(Object* p_o) {
@@ -75,7 +82,7 @@ namespace df {
 		//Guard ifs
 		if (!isStarted()) return logAndReturn(LogManager::LOG_ERROR, "WorldManager not started.");
 		if (m_deletions.isFull()) return logAndReturn(LogManager::LOG_ERROR, "Deletions list is full");
-		
+
 		for (int i = 0; i < m_updates.getCount(); i++) {
 			markForDelete(m_updates[i]);
 
@@ -112,7 +119,7 @@ namespace df {
 
 		for (int i = 0; i < m_updates.getCount(); i++) {
 			Vector new_pos = m_updates[i]->predictPosition();
-			if (new_pos != m_updates[i]->getPosition()){
+			if (new_pos != m_updates[i]->getPosition()) {
 				moveObject(m_updates[i], new_pos);
 			}
 		}
@@ -146,6 +153,22 @@ namespace df {
 	int WorldManager::logAndReturn(LogManager::LogLevel level, const char* message) {
 		log.writeLog(CLASS_NAME, level, "%s: %s", __func__, message);
 		return -1;
+	}
+
+	ObjectList WorldManager::getCollisions(const Object* p_o, Vector where) {
+		// creates empty list
+		ObjectList collision_list;
+
+		// Iterate through all Objects.
+		for (int i = 0; i < m_updates.getCount(); i++) {
+			Object* p_temp_o = m_updates[i];
+			if (p_temp_o != p_o) {
+				if(Utility::positionsIntersect(p_temp_o->getPosition(), where) && p_temp_o->isSolid()){
+					collision_list.insert(p_temp_o);
+				}
+			}
+		}
+		return collision_list;
 	}
 
 }

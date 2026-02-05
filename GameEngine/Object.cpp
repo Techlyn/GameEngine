@@ -19,12 +19,16 @@ namespace df {
 		
 		log.writeLog(CLASS_NAME, LogManager::LOG_DEBUG, "%s: created at %p", __func__, this);
 
+		// initialized variables
 		static int id_count = 0;
 		m_id = id_count;
 		m_type = "Object";
 		m_position = Vector(0, 0);
 
 		m_altitude = 1;
+		m_direction = Vector();
+		m_speed = 0.0;
+		m_solidness = Solidness::HARD;
 
 		WorldManager::getInstance().insertObject(this);
 
@@ -118,6 +122,27 @@ namespace df {
 		Vector new_pos = m_position + getVelocity();
 		// Returns new position
 		return new_pos;
+	}
+
+	bool Object::isSolid() const {
+		if (Solidness::HARD || Solidness::SOFT) {
+			return true;
+		}
+		return false;
+	}
+
+	int Object::setSolidness(Solidness new_solid) {
+		if (new_solid != Solidness::HARD && new_solid != Solidness::SOFT && new_solid != Solidness::SPECTRAL) {
+			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Incorrect solidness set");
+			return -1;
+		}
+
+		m_solidness = new_solid;
+		return 0;
+	}
+
+	Solidness Object::getSolidness() const {
+		return m_solidness;
 	}
 
 

@@ -24,8 +24,8 @@ namespace df {
 	}
 
 	Vector::Vector(int init_x, int init_y) {
-		m_x = init_x;
-		m_y = init_y;
+		m_x = static_cast<float>(init_x);
+		m_y = static_cast<float>(init_y);
 	}
 
 	
