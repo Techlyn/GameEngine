@@ -15,6 +15,9 @@ namespace df {
 		m_frame = new Frame[0];
 		m_max_frame_count = 0;
 		m_colour = COLOUR_DEFAULT;
+		m_slowdown = 1;
+		m_label = "";
+		m_transparency = 0;
 	}
 
 	Sprite::Sprite(int max_frames) {
@@ -57,7 +60,7 @@ namespace df {
 	}
 
 	int Sprite::getFrameCount() const {
-		return m_max_frame_count;
+		return m_frame_count;
 	}
 
 	int Sprite::addFrame(Frame new_frame) {
