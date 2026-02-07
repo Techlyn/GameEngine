@@ -48,6 +48,8 @@ namespace df {
 		// Return pointer to it if found, else NULL.
 		Sprite* getSprite(std::string label) const;
 
+		void printSprite();
+
 	}; // end class ResourceManager
 
 } // end namespace df

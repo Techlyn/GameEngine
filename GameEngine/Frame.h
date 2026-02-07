@@ -14,6 +14,13 @@
 
 namespace df {
 
+	enum Transform {
+		NONE,			// No frame transformation (default)
+		VERTICAL,		// Frame flipped Vertically
+		HORIZONTAL,		// Frame flipped horizontally
+		BOTH,			// Frame flipped both vertically and horizontally
+	};
+
 	class Frame {
 	private:
 		int m_width; // Width of frame.
@@ -48,7 +55,7 @@ namespace df {
 		// Draw self, centered at position (x,y) with colour.
 		// Return 0 if ok, else -1.
 		// Note: top-left coordinate is (0,0).
-		int draw(Vector position, Colour colour, char transparent) const;
+		int draw(Vector position, Colour colour, char transparent, Transform transform = NONE) const;
 
 	};
 

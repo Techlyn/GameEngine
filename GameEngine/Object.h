@@ -12,6 +12,7 @@
 #include "LogManager.h"
 #include "Event.h"
 #include "Vector.h"
+#include "Animation.h"
 
 namespace df {
 
@@ -35,7 +36,8 @@ namespace df {
 		Vector m_direction;		// Direction vector
 		float m_speed;			// Object speed in direction.
 		Solidness m_solidness;	// Solidness of object, used for collision detection.
-		bool m_no_soft;			// True if object should not cause soft collisions (default is false).	
+		bool m_no_soft;			// True if object should not cause soft collisions (default is false).
+		Animation m_animation;   // Animation associated with Object.
 
 	public:
 		// Construct Object. Set default parameters and
@@ -116,6 +118,19 @@ namespace df {
 
 		// Get 'no soft' setting (true -- cannot move onto SOFT Objects).
 		bool getNoSoft() const;
+
+		// Set Sprite for this Object to animate.
+		// Return 0 if ok, else -1.
+		int setSprite(std::string sprite_label);
+
+		// Set Animation for this Object to new one.
+		// Set bounding box to size of associated Sprite.
+		void setAnimation(Animation new_animation);
+
+		// Get Animation for this Object.
+		Animation getAnimation() const;
+
+
 
 	}; // end class Object
 } // end namespace df

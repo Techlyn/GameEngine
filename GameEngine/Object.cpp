@@ -4,6 +4,7 @@
 
 #include "Object.h"
 #include "WorldManager.h"
+#include "ResourceManager.h"
 
 
 
@@ -59,7 +60,8 @@ namespace df {
 	}
 
 	int Object::draw() {
-		return 1;
+		Vector pos = getPosition();
+		return m_animation.draw(pos);
 	}
 
 	void Object::setPosition(Vector new_pos) {
@@ -152,6 +154,28 @@ namespace df {
 
 	bool Object::getNoSoft() const {
 		return m_no_soft;
+	}
+
+	// Set Sprite for this Object to animate.
+	int Object::setSprite(std::string sprite_label) {
+		ResourceManager& RM = ResourceManager::getInstance();
+
+		Sprite* p_sprite = RM.getSprite(sprite_label);
+		if (p_sprite == nullptr) {
+			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error sprite pointer NULL");
+			return -1;
+		}
+
+		m_animation.setSprite(p_sprite);
+		return 0;
+	}
+
+	void Object::setAnimation(Animation new_animation) {
+		m_animation = new_animation;
+	}
+
+	Animation Object::getAnimation() const {
+		return m_animation;
 	}
 
 

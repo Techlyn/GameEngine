@@ -45,10 +45,36 @@ namespace df {
 	}
 
 
-	int Frame::draw(Vector position, Colour colour, char transparent) const {
+	int Frame::draw(Vector position, Colour colour, char transparent, Transform transform) const {
 		if (m_frame_str.empty()) {
 			return -1;
 		}
+
+		int h_start, h_incr;
+		int v_start, v_incr;
+
+		// Get xy start, end and incr based on transform.
+		switch (transform) {
+		case NONE:
+			h_start = 0; h_incr = 1;
+			v_start = 0; v_incr = 1;
+			break;
+		case HORIZONTAL:
+			h_start = m_width - 1; h_incr = -1;
+			v_start = 0; v_incr = 1;
+			break;
+		case VERTICAL:
+			h_start = 0; h_incr = 1;
+			v_start = m_height - 1; v_incr = -1;
+			break;
+		case BOTH:
+			h_start = m_width - 1; h_incr = -1;
+			v_start = m_height - 1; v_incr = -1;
+			break;
+		}
+
+		int v = v_start;
+		int h = h_start;
 
 		for (int y = 0; y < m_height - 1; y++) {
 			for (int x = 0; x < m_width - 1; x++) {
@@ -56,12 +82,16 @@ namespace df {
 					float x_offset = static_cast<float>(m_width) / 2;
 					float y_offset = static_cast<float>(m_height) / 2;
 
+					
 					for (int y = 0; y < m_height - 1; y++) {
 						for (int x = 0; x < m_width - 1; x++) {
 							Vector temp_pos(position.getX() + x - x_offset,
 								position.getY() + y - y_offset);
-							DisplayManager::getInstance().drawCh(temp_pos, m_frame_str[y * m_width + x], colour);
+							char ch = m_frame_str[v * m_width + h];
+							DisplayManager::getInstance().drawCh(temp_pos, ch, colour);
+							h += h_incr;
 						}
+						v += v_incr;
 					}
 				}
 			}

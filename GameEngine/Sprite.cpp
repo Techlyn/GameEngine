@@ -27,6 +27,9 @@ namespace df {
 		m_frame = new Frame[max_frames];
 		m_max_frame_count = max_frames;
 		m_colour = COLOUR_DEFAULT;
+		m_slowdown = 1;
+		m_label = "";
+		m_transparency = 0;
 	}
 
 	Sprite::~Sprite() {

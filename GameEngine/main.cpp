@@ -12,6 +12,7 @@
 #include "EventKeyboard.h"
 #include "EventOut.h"
 #include "EventCollision.h"
+#include "ResourceManager.h"
 
 int displayTest();
 void displayManagerTest();
@@ -66,9 +67,15 @@ int main() {
 	log_manager.setGlobalLevel(log_manager.LOG_TRACE);
 	log_manager.setFlush();
 
+	df::ResourceManager& RM = df::ResourceManager::getInstance();
+
+	RM.startUp();
+	RM.loadSprite("saucer.txt", "Saucer");
+	RM.printSprite();
+
+	RM.shutDown();
 	
 
-	gameManagerTest();
 	
 }
 
