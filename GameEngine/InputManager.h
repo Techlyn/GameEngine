@@ -14,6 +14,8 @@
 #include "EventKeyboard.h"
 #include "EventMouse.h"
 
+#define IM df::InputManager.getInstance();
+
 
 namespace df {
 	

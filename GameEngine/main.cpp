@@ -22,17 +22,16 @@ class TestObject : public df::Object {
 public:
 	TestObject();
 	void out();
-	int draw() override;
 	int eventHandler(const df::Event* p_e) override;
 };
 
 TestObject::TestObject() {
 	setType("TestObject");
 	setAltitude(df::MAX_ALTITUDE);
-
+	setSprite("Saucer");
 	df::Vector p(15, 8);
 
-	setVelocity(df::Vector(0.1, 0));
+	setVelocity(df::Vector(0.01, 0));
 
 	setPosition(p);
 
@@ -41,21 +40,21 @@ TestObject::TestObject() {
 
 int TestObject::eventHandler(const df::Event* p_e) {
 	
-	if (p_e->getType() == df::OUT_EVENT) {
-		const df::EventOut* p_out_e = dynamic_cast<const df::EventOut*>(p_e);
-		if (p_out_e->getType() == df::OUT_EVENT) {
-			df::LogManager::getInstance().writeLog("%s: received OUT_EVENT", __func__);
-			out();
-		}
-	}
+	//if (p_e->getType() == df::OUT_EVENT) {
+	//	const df::EventOut* p_out_e = dynamic_cast<const df::EventOut*>(p_e);
+	//	if (p_out_e->getType() == df::OUT_EVENT) {
+	//		df::LogManager::getInstance().writeLog("%s: received OUT_EVENT", __func__);
+	//		out();
+	//	}
+	//}
 	return 0;
 }
 
-int TestObject::draw() {
-	df::DisplayManager& DM = df::DisplayManager::getInstance();
-	DM.drawCh(getPosition(), 'T', df::RED);
-	return 0;
-}
+//int TestObject::draw() {
+//	df::DisplayManager& DM = df::DisplayManager::getInstance();
+//	DM.drawCh(getPosition(), 'T', df::RED);
+//	return 0;
+//}
 
 void TestObject::out(){
 	df::WorldManager::getInstance().markForDelete(this);
@@ -68,12 +67,19 @@ int main() {
 	log_manager.setFlush();
 
 	df::ResourceManager& RM = df::ResourceManager::getInstance();
-
+	df::GameManager& game_manager = df::GameManager::getInstance();
+	
 	RM.startUp();
+	game_manager.startUp();
 	RM.loadSprite("saucer.txt", "Saucer");
-	RM.printSprite();
+	
+	new TestObject();
 
+	game_manager.run();
+
+	game_manager.shutDown();
 	RM.shutDown();
+	
 	
 
 	

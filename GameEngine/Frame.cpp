@@ -50,8 +50,8 @@ namespace df {
 			return -1;
 		}
 
-		int h_start, h_incr;
-		int v_start, v_incr;
+		int h_start{ 0 }, h_incr{ 0 };
+		int v_start{ 0 }, v_incr{ 0 };
 
 		// Get xy start, end and incr based on transform.
 		switch (transform) {
@@ -76,25 +76,22 @@ namespace df {
 		int v = v_start;
 		int h = h_start;
 
-		for (int y = 0; y < m_height - 1; y++) {
-			for (int x = 0; x < m_width - 1; x++) {
+		for (int y = 0; y < m_height; y++) {
+			for (int x = 0; x < m_width; x++) {
 				if ((transparent != 0) || (m_frame_str[y * getWidth() + x] != transparent)) {
 					float x_offset = static_cast<float>(m_width) / 2;
 					float y_offset = static_cast<float>(m_height) / 2;
-
-					
-					for (int y = 0; y < m_height - 1; y++) {
-						for (int x = 0; x < m_width - 1; x++) {
-							Vector temp_pos(position.getX() + x - x_offset,
+					Vector temp_pos(position.getX() + x - x_offset,
 								position.getY() + y - y_offset);
-							char ch = m_frame_str[v * m_width + h];
-							DisplayManager::getInstance().drawCh(temp_pos, ch, colour);
-							h += h_incr;
-						}
-						v += v_incr;
-					}
+					char ch = m_frame_str[v * m_width + h];
+					DisplayManager::getInstance().drawCh(temp_pos, ch, colour);
+					
+						
 				}
+				h += h_incr;
 			}
+			h = h_start;
+			v += v_incr;
 		}
 
 

@@ -12,7 +12,7 @@
 // Engine inclues
 #include "Manager.h"
 
-#define LM df::LogManager::getInstance();
+#define LM df::LogManager::getInstance()
 
 namespace df {
 

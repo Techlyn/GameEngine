@@ -9,6 +9,8 @@
 #include "LogManager.h"
 #include "Sprite.h"
 
+#define RM df::ResourceManager::getInstance()
+
 namespace df {
 
 	const int MAX_SPRITES = 500;
@@ -16,8 +18,9 @@ namespace df {
 	class ResourceManager : public Manager {
 
 	private:
-		static LogManager& log;
+
 		std::string CLASS_NAME = "ResourceManager";
+
 		ResourceManager();							// Private (a singleton)	
 		ResourceManager(ResourceManager const&);	// Don't allow copy.	
 		void operator=(ResourceManager const&);		// Don't allow assignment.

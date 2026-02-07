@@ -13,8 +13,8 @@ namespace df {
 
 	Vector::Vector() {
 		
-		m_x = 0;
-		m_y = 0;
+		m_x = 0.0f;
+		m_y = 0.0f;
 	}
 
 	Vector::Vector(float init_x, float init_y) {
@@ -54,8 +54,8 @@ namespace df {
 	}
 
 	float Vector::getMagnitude() const {
-		float mag = sqrt(m_x * m_x + m_y * m_y);
-		return mag;
+		return sqrt(m_x * m_x + m_y * m_y);
+
 	}
 
 	Vector Vector::normalize() {

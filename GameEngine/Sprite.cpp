@@ -3,6 +3,7 @@
 //
 
 #include "Sprite.h"
+#include "DisplayManager.h"
 
 namespace df {
 
@@ -107,11 +108,10 @@ namespace df {
 			return -1;
 		}
 
-		for (int y = 0; y < m_height - 1; y++) {
-			for (int x = 0; x < m_width - 1; x++) {
-			
-			}
-		}
+		Frame frame_to_be_drawn = getFrame(frame_number);
+		frame_to_be_drawn.draw(position, m_colour, m_transparency);
+	
+		
 	}
 
 	void Sprite::setTransparency(char new_transparency) {

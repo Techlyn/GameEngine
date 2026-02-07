@@ -15,6 +15,7 @@ namespace df {
 		std::string m_name = "";
 		m_index = 0;
 		m_slowdown_count = 0;
+		m_transform = NONE;
 	}
 
 	void Animation::setSprite(Sprite* p_new_sprite) {
@@ -67,7 +68,7 @@ namespace df {
 		int count = getSlowdownCount();
 		count++;
 
-		if(count >= getSlowdownCount()){
+		if(count >= m_p_sprite->getSlowdown()){
 			count = 0;
 			index++;
 

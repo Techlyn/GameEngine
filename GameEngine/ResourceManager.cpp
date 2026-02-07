@@ -14,16 +14,16 @@
 
 namespace df { 
 
-	LogManager& ResourceManager::log = LogManager::getInstance();
+	
 
 	ResourceManager::ResourceManager() {
-		log.writeLog(CLASS_NAME, log.LOG_INFO, "%s created at %p", __func__, this);
+		LM.writeLog(CLASS_NAME, LM.LOG_INFO, "%s created at %p", __func__, this);
 		setType("ResourceManager");
 
 		for (int i = 0; i < MAX_SPRITES; i++) {
 			m_p_sprite[i] = nullptr;
 		}
-		m_sprite_count = 0;
+		
 	}
 
 	void ResourceManager::operator=(ResourceManager const&) {
@@ -36,9 +36,12 @@ namespace df {
 	}
 
 	int ResourceManager::startUp() {
-
+		if (Manager::isStarted()) {
+			LM.writeLog(CLASS_NAME, LM.LOG_INFO, "Warning! ResourceManager already started");
+			return -1;
+		}
 		Manager::startUp();
-		log.writeLog(CLASS_NAME, log.LOG_INFO, "Resource Manager Start");
+		LM.writeLog(CLASS_NAME, LM.LOG_INFO, "Resource Manager Start");
 		return 0;
 	}
 
@@ -54,18 +57,18 @@ namespace df {
 
 	int ResourceManager::loadSprite(std::string filename, std::string label) {
 		if (m_sprite_count >= MAX_SPRITES) {
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Sprite array is full");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Sprite array is full");
 			return -1;
 		}
 		if (getSprite(label) != nullptr) {
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Sprite with label %s already exists", label);
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Sprite with label %s already exists", label);
 			return -1;
 		}
 
 		std::ifstream file(filename);
 
 		if (!file.is_open()) {
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Could not open file %s", filename);
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Could not open file %s", filename);
 			return -1;
 		}
 
@@ -154,8 +157,10 @@ namespace df {
 			// else add line to frame string.
 			else {
 				std::string frame_str = new_frame->getString();
-				frame_str += line + "\n";
+				frame_str.append(line);
 				new_frame->setString(frame_str);
+				new_frame->setHeight(height);
+				new_frame->setWidth(width);
 				inFrame = true;
 			}
 			getline(file, line);
@@ -195,7 +200,7 @@ namespace df {
 
 	Sprite* ResourceManager::getSprite(std::string label) const {
 		if (m_sprite_count == 0) {
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! No sprites loaded");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! No sprites loaded");
 			return nullptr;
 		}
 		for (int i = 0; i < m_sprite_count; i++) {
@@ -203,7 +208,7 @@ namespace df {
 				return m_p_sprite[i];
 			}
 		}
-		log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Sprite with label %s not found", label);
+		LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Sprite with label %s not found", label);
 		return nullptr;
 	}
 
@@ -211,7 +216,7 @@ namespace df {
 	void ResourceManager::printSprite() {
 		for (int i = 0; i < m_p_sprite[0]->getFrameCount(); i++) {
 			Frame test = m_p_sprite[0]->getFrame(i);
-			log.writeLog("frame: %d\n", i + 1);
+			LM.writeLog("frame: %d\n", i + 1);
 			std::cout << test.getString() << std::endl;
 		}
 	}
