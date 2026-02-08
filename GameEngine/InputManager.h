@@ -14,7 +14,7 @@
 #include "EventKeyboard.h"
 #include "EventMouse.h"
 
-#define IM df::InputManager.getInstance();
+#define IM df::InputManager.getInstance()
 
 
 namespace df {
@@ -22,8 +22,6 @@ namespace df {
 	class InputManager : public Manager {
 
 	private:
-
-		static LogManager& log;
 		const std::string CLASS_NAME = "InputManager";
 
 		InputManager();						// Private (a singleton)

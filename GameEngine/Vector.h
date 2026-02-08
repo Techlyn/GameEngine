@@ -26,10 +26,12 @@ namespace df {
 
 		// Set horizontal component
 		void setX(float new_x);
+		// Get horizontal component
 		float getX() const;
 
 		// Set vertical component
 		void setY(float new_y);
+		//Get horizontal component
 		float getY() const;
 
 		// Set horizontal and vertical components.

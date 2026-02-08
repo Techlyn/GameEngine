@@ -7,7 +7,7 @@ Saucer::Saucer() {
 
 int Saucer::eventHandler(const df::Event* p_e) {
 	if (p_e->getType() == df::STEP_EVENT) {
-		return 0;
+		return 1;
 	}
-	
+	return 0;
 }

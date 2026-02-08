@@ -130,12 +130,12 @@ namespace df {
 	}
 
 	void ObjectList::listList() {
-		log.writeLog("%s Listing all in generated object list",__func__);
-		log.writeLog("i\tpointer");
+		LM.writeLog("%s Listing all in generated object list",__func__);
+		LM.writeLog("i\tpointer");
 		for (int i = 0; i < MAX_OBJECTS; i++) {
-			log.writeLog("%d\t%p", i, m_p_obj[i]);
+			LM.writeLog("%d\t%p", i, m_p_obj[i]);
 		}
-		log.writeLog("end of %s", __func__);
+		LM.writeLog("end of %s", __func__);
 	}
 
 }

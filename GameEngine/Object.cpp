@@ -158,8 +158,6 @@ namespace df {
 
 	// Set Sprite for this Object to animate.
 	int Object::setSprite(std::string sprite_label) {
-		ResourceManager& RM = ResourceManager::getInstance();
-
 		Sprite* p_sprite = RM.getSprite(sprite_label);
 		if (p_sprite == nullptr) {
 			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error sprite pointer NULL");

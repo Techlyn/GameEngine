@@ -87,13 +87,13 @@ namespace df {
 
 		while (line != "<HEADER>") {
 			getline(file, line);
-			trimmedLine = Utility::trimString(line);
+			trimmedLine = df::trimString(line);
 		}
 
 		while (trimmedLine != "</HEADER>")
 		{
 			getline(file, line);
-			trimmedLine = Utility::trimString(line);
+			trimmedLine = df::trimString(line);
 
 			std::istringstream iss(trimmedLine);
 			std::string key;
@@ -102,7 +102,7 @@ namespace df {
 			if (iss >> key) {
 
 				std::getline(iss, value);
-				value = Utility::trimString(value);
+				value = df::trimString(value);
 
 				if (key == "frames") {
 					frames = std::stoi(value);
@@ -117,7 +117,7 @@ namespace df {
 
 				}
 				else if (key == "colour") {
-					colour = Utility::getColourFromString(value);
+					colour = df::getColourFromString(value);
 
 				}
 				else if (key == "slowdown") {
@@ -134,13 +134,13 @@ namespace df {
 		new_sprite->setSlowdown(slowdown);
 
 		while (trimmedLine != "<BODY>") {
-			trimmedLine = Utility::trimString(line);
+			trimmedLine = df::trimString(line);
 			getline(file, line);
 		}
 
 		while (trimmedLine != "</BODY>") {
 
-			trimmedLine = Utility::trimString(line);
+			trimmedLine = df::trimString(line);
 
 			if (trimmedLine == "</BODY>")
 				continue;

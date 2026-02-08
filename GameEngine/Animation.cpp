@@ -81,4 +81,35 @@ namespace df {
 		setSlowdownCount(count);
 		
 	}
+
+	void Animation::setTransform(Transform new_transform) {
+		m_transform = new_transform;
+	}
+
+	Transform Animation::getTransform() const {
+		return m_transform;
+	}
+
+	void Animation::setBox(Box new_box) {
+		m_box = new_box;
+	}
+
+	Box Animation::getBox() const {
+
+		//If no sprite, return Box centered at (0,0).
+		if (!m_p_sprite) {
+			Box box(Vector(-0.5, -0.5), 0.99, 0.99);
+			return box;
+		}
+
+		// Create Box around centered Sprite.
+		Vector corner(-1 * m_p_sprite->getWidth() / 2.0,
+			-1 * m_p_sprite->getHeight() / 2.0);
+
+		Box box(corner, m_p_sprite->getWidth(),
+			m_p_sprite->getHeight());
+
+		return box;
+	}
+
 }

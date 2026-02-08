@@ -40,21 +40,15 @@ TestObject::TestObject() {
 
 int TestObject::eventHandler(const df::Event* p_e) {
 	
-	//if (p_e->getType() == df::OUT_EVENT) {
-	//	const df::EventOut* p_out_e = dynamic_cast<const df::EventOut*>(p_e);
-	//	if (p_out_e->getType() == df::OUT_EVENT) {
-	//		df::LogManager::getInstance().writeLog("%s: received OUT_EVENT", __func__);
-	//		out();
-	//	}
-	//}
+	if (p_e->getType() == df::OUT_EVENT) {
+		const df::EventOut* p_out_e = dynamic_cast<const df::EventOut*>(p_e);
+		if (p_out_e->getType() == df::OUT_EVENT) {
+			df::LogManager::getInstance().writeLog("%s: received OUT_EVENT", __func__);
+			out();
+		}
+	}
 	return 0;
 }
-
-//int TestObject::draw() {
-//	df::DisplayManager& DM = df::DisplayManager::getInstance();
-//	DM.drawCh(getPosition(), 'T', df::RED);
-//	return 0;
-//}
 
 void TestObject::out(){
 	df::WorldManager::getInstance().markForDelete(this);
@@ -66,7 +60,6 @@ int main() {
 	log_manager.setGlobalLevel(log_manager.LOG_TRACE);
 	log_manager.setFlush();
 
-	df::ResourceManager& RM = df::ResourceManager::getInstance();
 	df::GameManager& game_manager = df::GameManager::getInstance();
 	
 	RM.startUp();
@@ -98,7 +91,6 @@ void gameManagerTest() {
 }
 
 void displayManagerTest() {
-	df::DisplayManager& DM = df::DisplayManager::getInstance();
 	DM.startUp();
 	DM.drawCh(df::Vector(1, 5), '*', df::GREEN);
 	DM.drawCh(df::Vector(84, 5), '*', df::GREEN);

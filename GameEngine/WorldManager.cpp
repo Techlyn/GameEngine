@@ -169,7 +169,7 @@ return m_updates.insert(p_o);
 		for (int i = 0; i < m_updates.getCount(); i++) {
 			Object* p_temp_o = m_updates[i];
 			if (p_temp_o != p_o) {
-				if(Utility::positionsIntersect(p_temp_o->getPosition(), where) && p_temp_o->isSolid()){
+				if(df::positionsIntersect(p_temp_o->getPosition(), where) && p_temp_o->isSolid()){
 					collision_list.insert(p_temp_o);
 				}
 			}
@@ -187,7 +187,7 @@ return m_updates.insert(p_o);
 					// Create Collision event.
 					EventCollision c(p_o, p_temp_o, where);
 
-					// Send both to Objects
+					// Send to both Objects
 					p_o->eventHandler(&c);
 					p_temp_o->eventHandler(&c);
 

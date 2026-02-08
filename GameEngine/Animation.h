@@ -11,6 +11,7 @@
 // Engine includes.
 #include "Sprite.h"
 #include "LogManager.h"
+#include "Box.h"
 
 namespace df {
 	class Animation {
@@ -25,6 +26,7 @@ namespace df {
 		int m_slowdown_count;	// Slowdown counter
 
 		Transform m_transform;	// Transform sprite before drawing.
+		Box m_box;
 
 	public:
 		// Animation constructor.
@@ -61,6 +63,14 @@ namespace df {
 		// Drawing accounts for slowdown, and advances Sprite frame.
 		// Return 0 if ok, else -1.
 		int draw(Vector position);
+
+		void setTransform(Transform new_transform);
+
+		Transform getTransform() const;
+
+		void setBox(Box new_box);
+
+		Box getBox() const;
 	};
 }
 

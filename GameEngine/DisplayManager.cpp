@@ -9,10 +9,8 @@
 
 namespace df {
 
-	LogManager& DisplayManager::log = LogManager::getInstance();
-
 	DisplayManager::DisplayManager() {
-		log.writeLog(CLASS_NAME, log.LOG_INFO, "%s created at %p", __func__, this);
+		LM.writeLog(CLASS_NAME, LM.LOG_INFO, "%s created at %p", __func__, this);
 		setType("DisplayManager");
 		m_font_file = FONT_FILE_DEFAULT;
 		m_p_window = NULL;
@@ -38,7 +36,7 @@ namespace df {
 
 	int DisplayManager::startUp() {
 		if (m_p_window != NULL) {
-			log.writeLog(CLASS_NAME, log.LOG_INFO, "window already created.");
+			LM.writeLog(CLASS_NAME, LM.LOG_INFO, "window already created.");
 			return 0;
 		}
 
@@ -46,7 +44,7 @@ namespace df {
 		m_p_window = new sf::RenderWindow(sf::VideoMode(size), WINDOW_TITLE_DEFAULT, WINDOW_STYLE_DEFAULT);
 
 		if (!m_p_window) {
-			log.writeLog(CLASS_NAME, LogManager::LOG_ERROR, "Error! Unable to allocate RenderWindow"); 
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Unable to allocate RenderWindow"); 
 			return -1;
 		}
 
@@ -55,12 +53,12 @@ namespace df {
 		
 
 		if (m_font.openFromFile(m_font_file) == false) {
-			log.writeLog(CLASS_NAME, LogManager::LOG_ERROR, "Error! unable to find font file");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! unable to find font file");
 			return -1;
 		}
 
 		Manager::startUp();
-		log.writeLog(CLASS_NAME, LogManager::LOG_INFO, "Display Manager Startup: SUCCESS");
+		LM.writeLog(CLASS_NAME, LM.LOG_INFO, "Display Manager Startup: SUCCESS");
 		return 0;
 	}
 
@@ -79,7 +77,7 @@ namespace df {
 	int DisplayManager::drawCh(Vector world_pos, char ch, Colour colour) const {
 		// Window allocation check
 		if (m_p_window == NULL) {
-			log.writeLog(CLASS_NAME, LogManager::LOG_ERROR, "Error! Window not allocated");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Window not allocated");
 			return -1;
 		}
 
@@ -133,7 +131,7 @@ namespace df {
 			text.setFillColor(sf::Color::Black);
 			break;
 		default:
-			log.writeLog(CLASS_NAME, LogManager::LOG_ERROR, "Error! Colour not recognised or added.");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Colour not recognised or added.");
 			break;
 		}
 
@@ -217,7 +215,7 @@ namespace df {
 			m_window_background_colour = sf::Color::White;
 			break;
 		default:
-			log.writeLog(LogManager::LOG_ERROR, "Error! Colour not recognised.");
+			LM.writeLog(LogManager::LOG_ERROR, "Error! Colour not recognised.");
 			return false;
 		}
 		return true;
@@ -225,7 +223,7 @@ namespace df {
 
 	int DisplayManager::swapBuffer() {
 		if (m_p_window == NULL) {
-			log.writeLog(LogManager::LOG_ERROR, "Error! window returned NULL");
+			LM.writeLog(LogManager::LOG_ERROR, "Error! window returned NULL");
 			return -1;
 		}
 

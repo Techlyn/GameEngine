@@ -12,10 +12,10 @@
 #include "Utility.h"
 
 
-namespace Utility {
+namespace df {
 
 
-	char* Utility::getTimeString() {
+	char* getTimeString() {
 		static char time_str[30];
 
 		time_t now;
@@ -29,7 +29,7 @@ namespace Utility {
 
 	}
 
-	bool Utility::positionsIntersect(df::Vector p1, df::Vector p2) {
+	bool positionsIntersect(df::Vector p1, df::Vector p2) {
 		if (fabsf(p1.getX() - p2.getX()) <= 1 &&
 			fabsf(p1.getY() - p2.getY()) <= 1) {
 			return true;
@@ -77,4 +77,53 @@ namespace Utility {
 		}
 	
 	}
-}
+
+	bool boxIntersectsBox(Box A, Box B) {
+		// Test horizontal overlap (x_overlap).
+		bool x_overlap = false;
+		if (B.getCorner().getX() <= A.getCorner().getX() && A.getCorner().getX() <= B.getCorner().getX() + B.getHorizontal()) {
+			if (A.getCorner().getX() <= B.getCorner().getX() && B.getCorner().getX() <= A.getCorner().getX() + A.getHorizontal()) {
+				x_overlap = true;
+			}
+		}
+
+		bool y_overlap = false;
+		if (B.getCorner().getY() <= A.getCorner().getY() && A.getCorner().getY() <= B.getCorner().getY() + B.getVertical()) {
+			if (A.getCorner().getY() <= B.getCorner().getY() && B.getCorner().getY() <= A.getCorner().getY() + A.getVertical()) {
+				y_overlap = true;
+			}
+		}
+
+		if (x_overlap && y_overlap) {
+			return true;
+		}
+		return false;
+	}
+
+
+	Box getWorldBox(const Object* p_o) {
+
+		Box box = p_o->getBox();
+		Vector corner = box.getCorner();
+
+		corner.setX(corner.getX() + p_o->getPosition().getX());
+		corner.setY(corner.getY() + p_o->getPosition().getY());
+		box.setCorner(corner);
+
+		return box;
+
+	}
+
+	Box getWorldBox(const Object* p_o, Vector where) {
+		
+		Box box = getWorldBox(p_o);
+		Vector corner = box.getCorner();
+
+		corner.setX(corner.getX() + where.getX());
+		corner.setY(corner.getY() + where.getY());
+		box.setCorner(corner);
+
+		return box;
+	}
+	
+} // namespace df

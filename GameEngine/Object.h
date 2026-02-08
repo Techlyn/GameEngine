@@ -13,6 +13,7 @@
 #include "Event.h"
 #include "Vector.h"
 #include "Animation.h"
+#include "Box.h"
 
 namespace df {
 
@@ -38,6 +39,8 @@ namespace df {
 		Solidness m_solidness;	// Solidness of object, used for collision detection.
 		bool m_no_soft;			// True if object should not cause soft collisions (default is false).
 		Animation m_animation;   // Animation associated with Object.
+		Box m_box;				// Box for sprite boundary & collisions
+
 
 	public:
 		// Construct Object. Set default parameters and
@@ -129,6 +132,12 @@ namespace df {
 
 		// Get Animation for this Object.
 		Animation getAnimation() const;
+
+		// Set Object's bounding box.
+		void setBox(Box new_box);
+
+		// Get Object's bounding box.
+		Box getBox() const;
 
 
 

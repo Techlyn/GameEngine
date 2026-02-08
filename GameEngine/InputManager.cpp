@@ -8,13 +8,9 @@
 
 namespace df {
 
-	LogManager& InputManager::log = LogManager::getInstance();
-
 	InputManager::InputManager() {
-		log.writeLog(CLASS_NAME, LogManager::LOG_INFO, "%s: started at %p", __func__, this);
+		LM.writeLog(CLASS_NAME, LM.LOG_INFO, "%s: started at %p", __func__, this);
 		setType("InputManager");
-
-
 	}
 
 	void InputManager::operator=(InputManager const&) {
@@ -28,7 +24,7 @@ namespace df {
 
 	int InputManager::startUp() {
 		if (!DisplayManager::getInstance().isStarted()) {
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! DisplayManager not started");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! DisplayManager not started");
 			return -1;
 		}
 
@@ -258,7 +254,7 @@ namespace df {
 		case sf::Keyboard::Key::Num0:
 			return Keyboard::Key::NUM0;
 		default:
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Undefined key pressed.");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Undefined key pressed.");
 			return Keyboard::Key::UNDEFINED_KEY;
 
 		}
@@ -273,7 +269,7 @@ namespace df {
 		case sf::Mouse::Button::Right:
 			return Mouse::Button::RIGHT;
 		default:
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Undefined mouse input pressed");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Undefined mouse input pressed");
 			return Mouse::Button::UNDEFINED_MOUSE_BUTTON;
 		}
 	}

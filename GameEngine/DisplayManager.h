@@ -14,6 +14,8 @@
 #include "Colour.h"
 #include "Vector.h"
 
+#define DM df::DisplayManager::getInstance()
+
 
 enum Justification {
 	LEFT_JUSTIFIED,
@@ -38,7 +40,6 @@ namespace df {
 	class DisplayManager : public Manager {
 	private:
 
-		static df::LogManager& log;
 		const std::string CLASS_NAME = "DisplayManager";
 
 		DisplayManager();						// Private (a singleton)

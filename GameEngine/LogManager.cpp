@@ -12,7 +12,6 @@
 
 namespace df {
 
-#define LM df::LogManager::getInstance();
 
 	LogManager::LogManager() {
 		setType("LogManager");
@@ -126,9 +125,9 @@ namespace df {
 	void LogManager::writeLog(const char* fmt, ...){
 		
 		if (m_p_f != NULL) {
-			fprintf(m_p_f, "%s:: ", Utility::getTimeString());
+			fprintf(m_p_f, "%s:: ", df::getTimeString());
 		}
-		fprintf(stderr, "%s:: ", Utility::getTimeString());
+		fprintf(stderr, "%s:: ", df::getTimeString());
 
 		va_list args;
 		va_start(args, fmt);
