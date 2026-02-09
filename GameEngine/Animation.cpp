@@ -16,6 +16,7 @@ namespace df {
 		m_index = 0;
 		m_slowdown_count = 0;
 		m_transform = NONE;
+		m_box = Box();
 	}
 
 	void Animation::setSprite(Sprite* p_new_sprite) {

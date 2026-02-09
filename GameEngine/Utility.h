@@ -12,7 +12,9 @@
 #include "Vector.h"
 #include "Colour.h"
 #include "Box.h"
+#include "Line.h"
 #include "Object.h"
+#include "Circle.h"
 
 
 
@@ -37,6 +39,32 @@ namespace df {
 		// Convert relative bounding Box for Object to absolute world Box.
 		Box getWorldBox(const Object* p_o);
 		Box getWorldBox(const Object* p_o, Vector where);
+
+		// Return true value between min and max (inclusive).
+		bool valueInRange(float value, float min, float max);
+
+		// Return true if Box comaints Position
+		bool boxContainsPosition(Box b, Vector p);
+
+		// Return true if Box 1 complete contains Box 2.
+		bool boxContainsBox(Box b1, Box b2);
+
+		// Return true if line seqments intersect.
+		// (Parallel line seqments don't intersect).
+		bool lineIntersectsLine(Line line1, Line line2);
+
+		// Find clockwise order, used to find lineIntersect.
+
+		bool ccw(Vector A, Vector B, Vector C);
+
+		// Return true if Line intersects Box.
+		bool lineIntersectsBox(Line line, Box b);
+
+		// Return true if Circle intersects or contains Box.
+		bool circleIntersectsBox(Circle circle, Box b);
+
+		// Return distance between any two positions.
+		float distance(Vector p1, Vector p2);
 		
 
 

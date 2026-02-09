@@ -70,7 +70,8 @@ namespace df {
 		Manager::shutDown();
 	}
 
-	int draw() {
+	int DisplayManager::drawCircle(sf::CircleShape circle) {
+		m_p_window->draw(circle);
 		return 0;
 	}
 
@@ -85,12 +86,12 @@ namespace df {
 		Vector pixel_pos = spaceToPixels(world_pos);
 
 		// Draw background rectangle since text is "see through" in SFML.
-		static sf::RectangleShape rectangle;
+		/*static sf::RectangleShape rectangle;
 		rectangle.setSize(sf::Vector2f(charWidth(), charHeight()));
 		rectangle.setFillColor(WINDOW_BACKGROUND_COLOUR_DEFAULT);
 		rectangle.setPosition(sf::Vector2f({ pixel_pos.getX() - charWidth() / 10},
 			{ pixel_pos.getY() + charHeight() / 5}));
-		m_p_window->draw(rectangle);
+		m_p_window->draw(rectangle);*/
 
 		// Create character text to draw.
 		static sf::Text text(m_font); 

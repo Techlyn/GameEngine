@@ -176,6 +176,13 @@ namespace df {
 		return m_animation;
 	}
 
+	void Object::setBox(Box new_box) {
+		m_box = new_box;
+	}
+
+	Box Object::getBox() const {
+		return m_box;
+	}
 
 
 }

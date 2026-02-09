@@ -65,6 +65,8 @@ namespace df {
 		// Close graphics window.
 		void shutDown();
 
+		int drawCircle(sf::CircleShape circle);
+
 		// Draw characters at window location (x,y) with colour.
 		int drawCh(Vector world_pos, char ch, Colour colour) const;
 

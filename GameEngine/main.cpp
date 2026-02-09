@@ -16,42 +16,99 @@
 
 int displayTest();
 void displayManagerTest();
-void gameManagerTest();
 
-class TestObject : public df::Object {
+#define RETICLE_CHAR '+'
+
+class TestReticle : public df::Object {
 public:
-	TestObject();
-	void out();
+	TestReticle();
+	int draw() override;
 	int eventHandler(const df::Event* p_e) override;
 };
 
-TestObject::TestObject() {
-	setType("TestObject");
+TestReticle::TestReticle() {
+	setType("TestReticle");
 	setAltitude(df::MAX_ALTITUDE);
-	setSprite("Saucer");
+	setSolidness(df::SPECTRAL);
 	df::Vector p(15, 8);
-
-	setVelocity(df::Vector(0.01, 0));
 
 	setPosition(p);
 
-	setSpeed(1);
+	
 }
 
-int TestObject::eventHandler(const df::Event* p_e) {
-	
-	if (p_e->getType() == df::OUT_EVENT) {
-		const df::EventOut* p_out_e = dynamic_cast<const df::EventOut*>(p_e);
-		if (p_out_e->getType() == df::OUT_EVENT) {
-			df::LogManager::getInstance().writeLog("%s: received OUT_EVENT", __func__);
-			out();
+int TestReticle::draw(void) {
+	return DM.drawCh(getPosition(), RETICLE_CHAR, df::RED);
+}
+
+
+
+int TestReticle::eventHandler(const df::Event* p_e) {
+
+	if (p_e->getType() == df::MSE_EVENT) {
+		const df::EventMouse* p_mouse_event = dynamic_cast<const df::EventMouse*> (p_e);
+		if (p_mouse_event->getMouseAction() == df::MOVED) {
+			setPosition(p_mouse_event->getMousePosition());
+			return 1;
 		}
 	}
+
+
+	
+	//if (p_e->getType() == df::OUT_EVENT) {
+	//	const df::EventOut* p_out_e = dynamic_cast<const df::EventOut*>(p_e);
+	//	if (p_out_e->getType() == df::OUT_EVENT) {
+	//		df::LogManager::getInstance().writeLog("%s: received OUT_EVENT", __func__);
+	//		out();
+	//	}
+	//}
 	return 0;
 }
 
-void TestObject::out(){
-	df::WorldManager::getInstance().markForDelete(this);
+//void TestObject::out(){
+//	df::WorldManager::getInstance().markForDelete(this);
+//}
+
+class TestCircle : public df::Object {
+public:
+	TestCircle();
+	int draw() override;
+	int eventHandler(const df::Event* p_e);
+};
+
+TestCircle::TestCircle() {
+	setType("TestBox");
+
+	setSolidness(df::HARD);
+
+	df::Vector p(15, 8);
+
+	setPosition(p);
+}
+
+int TestCircle::draw(){
+	sf::CircleShape circle;
+
+	circle.setRadius(50.f);
+
+	circle.setFillColor(sf::Color::Green);
+
+	circle.setOutlineThickness(5.f);
+	circle.setOutlineColor(sf::Color::White);
+
+	circle.setPosition(sf::Vector2f(getPosition().getX(), getPosition().getY()));
+
+	DM.drawCircle(circle);
+	return 0;
+
+}
+
+int TestCircle::eventHandler(const df::Event* p_e) {
+	if (p_e->getType() == df::MSE_EVENT) {
+		const df::EventMouse* p_mouse_event = dynamic_cast<const df::EventMouse*> (p_e);
+
+	}
+	return 0;
 }
 
 int main() {
@@ -64,9 +121,9 @@ int main() {
 	
 	RM.startUp();
 	game_manager.startUp();
-	RM.loadSprite("saucer.txt", "Saucer");
-	
-	new TestObject();
+
+	new TestReticle();
+	new TestBox();
 
 	game_manager.run();
 
@@ -78,17 +135,6 @@ int main() {
 	
 }
 
-void gameManagerTest() {
-	df::GameManager& game_manager = df::GameManager::getInstance();
-	game_manager.startUp();
-
-	TestObject* p_TestObject = new TestObject;
-	p_TestObject->draw();
-
-	game_manager.run();
-	game_manager.shutDown();
-	
-}
 
 void displayManagerTest() {
 	DM.startUp();
