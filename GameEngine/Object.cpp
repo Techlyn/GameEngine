@@ -27,7 +27,7 @@ namespace df {
 		m_position = Vector(0, 0);
 
 		m_altitude = 1;
-		m_direction = Vector();
+		m_direction = Vector(0,0);
 		m_speed = 0.0;
 		m_solidness = Solidness::HARD;
 		m_no_soft = false;
@@ -165,6 +165,7 @@ namespace df {
 		}
 
 		m_animation.setSprite(p_sprite);
+		setBox(m_animation.getBox());
 		return 0;
 	}
 

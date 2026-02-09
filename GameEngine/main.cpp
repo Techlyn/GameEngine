@@ -13,6 +13,7 @@
 #include "EventOut.h"
 #include "EventCollision.h"
 #include "ResourceManager.h"
+#include "Circle.h"
 
 int displayTest();
 void displayManagerTest();
@@ -24,13 +25,14 @@ public:
 	TestReticle();
 	int draw() override;
 	int eventHandler(const df::Event* p_e) override;
+	void collision(const df::EventCollision* p_c);
 };
 
 TestReticle::TestReticle() {
 	setType("TestReticle");
 	setAltitude(df::MAX_ALTITUDE);
-	setSolidness(df::SPECTRAL);
-	df::Vector p(15, 8);
+	setSolidness(df::HARD);
+	df::Vector p(0, 0);
 
 	setPosition(p);
 
@@ -53,7 +55,12 @@ int TestReticle::eventHandler(const df::Event* p_e) {
 		}
 	}
 
-
+	if (p_e->getType() == df::COLLISION_EVENT) {
+		const df::EventCollision* p_col_event = dynamic_cast<const df::EventCollision*> (p_e);
+		collision(p_col_event);
+		return 1;
+	}
+	return 0;
 	
 	//if (p_e->getType() == df::OUT_EVENT) {
 	//	const df::EventOut* p_out_e = dynamic_cast<const df::EventOut*>(p_e);
@@ -64,50 +71,42 @@ int TestReticle::eventHandler(const df::Event* p_e) {
 	//}
 	return 0;
 }
+void TestReticle::collision(const df::EventCollision* p_c) {
+	if ((p_c->getObject1()->getType() == "TestReticle") && (p_c->getObject2()->getType() == "TestReticle")) {
+		return;
+	}
+	if ((p_c->getObject1()->getType() == "TestSaucer") || (p_c->getObject2()->getType() == "TestSaucer")) {
+		LM.writeLog("Reticle and saucer interacted with each other!");
+	}
+}
 
 //void TestObject::out(){
 //	df::WorldManager::getInstance().markForDelete(this);
 //}
 
-class TestCircle : public df::Object {
+class TestSaucer : public df::Object {	
 public:
-	TestCircle();
-	int draw() override;
+	TestSaucer();
+
 	int eventHandler(const df::Event* p_e);
 };
 
-TestCircle::TestCircle() {
-	setType("TestBox");
+TestSaucer::TestSaucer() {
+	setType("TestSaucer");
+	setSprite("saucer");
 
 	setSolidness(df::HARD);
+	
+	
 
 	df::Vector p(15, 8);
 
 	setPosition(p);
 }
 
-int TestCircle::draw(){
-	sf::CircleShape circle;
 
-	circle.setRadius(50.f);
 
-	circle.setFillColor(sf::Color::Green);
-
-	circle.setOutlineThickness(5.f);
-	circle.setOutlineColor(sf::Color::White);
-
-	circle.setPosition(sf::Vector2f(getPosition().getX(), getPosition().getY()));
-
-	DM.drawCircle(circle);
-	return 0;
-
-}
-
-int TestCircle::eventHandler(const df::Event* p_e) {
-	if (p_e->getType() == df::MSE_EVENT) {
-		const df::EventMouse* p_mouse_event = dynamic_cast<const df::EventMouse*> (p_e);
-
-	}
+int TestSaucer::eventHandler(const df::Event* p_e) {
 	return 0;
 }
 
@@ -120,10 +119,12 @@ int main() {
 	df::GameManager& game_manager = df::GameManager::getInstance();
 	
 	RM.startUp();
+
+	RM.loadSprite("saucer.txt", "saucer");
 	game_manager.startUp();
 
 	new TestReticle();
-	new TestBox();
+	new TestSaucer();
 
 	game_manager.run();
 

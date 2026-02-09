@@ -7,7 +7,7 @@
 namespace df {
 
 	EventCollision::EventCollision() {
-		setType("EventCollision");
+		setType(COLLISION_EVENT);
 		m_pos = Vector();
 		m_p_obj1 = nullptr;
 		m_p_obj2 = nullptr;

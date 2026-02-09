@@ -127,9 +127,6 @@ return m_updates.insert(p_o);
 	}
 
 	void WorldManager::draw() {
-
-		
-
 		for (int alt = 0; alt <= MAX_ALTITUDE; alt++) {
 			for (int i = 0; i < m_updates.getCount(); i++) {
 				if (m_updates[i]->getAltitude() == alt) {
@@ -209,15 +206,6 @@ return m_updates.insert(p_o);
 
 		// if here, no collision between two HARD objects so allow move.
 		p_o->setPosition(where);
-		//temp boundary check, if object goes out of bounds, send out event to object.
-		Vector p = p_o->getPosition();
-		if (p.getX() < 0 || p.getX() >= df::DisplayManager::getInstance().getHorizontal() ||
-			p.getY() < 0 || p.getY() >= df::DisplayManager::getInstance().getVertical()) {
-			
-			EventOut ov;
-			p_o->eventHandler(&ov);
-		}
-		
 		return 0;
 	}
 

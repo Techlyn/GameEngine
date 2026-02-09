@@ -10,6 +10,7 @@
 #include "Object.h"
 
 namespace df {
+	const std::string COLLISION_EVENT = "df::collision";
 
 	class EventCollision : public Event {
 	public:
