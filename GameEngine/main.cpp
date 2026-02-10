@@ -87,6 +87,10 @@ void TestReticle::collision(const df::EventCollision* p_c) {
 class TestSaucer : public df::Object {	
 public:
 	TestSaucer();
+	
+	void collision(const df::EventCollision* p_c);
+	void moveToStart();
+	void out();
 
 	int eventHandler(const df::Event* p_e);
 };
@@ -107,7 +111,41 @@ TestSaucer::TestSaucer() {
 
 
 int TestSaucer::eventHandler(const df::Event* p_e) {
-	return 0;
+
+	if (p_e->getType() == df::OUT_EVENT) {
+		out();
+		return 1;
+	}
+
+	if (p_e->getType() == df::COLLISION_EVENT) {
+		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
+		collision(p_collision_event);
+		return 1;
+	}
+}
+
+void TestSaucer::collision(const df::EventCollision* p_c) {
+	if ((p_c->getObject1()->getType() == "TestSaucer") && (p_c->getObject2()->getType() == "TestSaucer")) {
+		return;
+	}
+}
+
+void TestSaucer::moveToStart() {
+	df::Vector temp_pos;
+
+	temp_pos.setX(15);
+	temp_pos.setY(84);
+
+	WM.moveObject(this, temp_pos);
+}
+
+void TestSaucer::out() {
+	if (getPosition().getX() >= 0) {
+		return;
+	}
+
+	moveToStart();
+
 }
 
 int main() {
@@ -125,6 +163,9 @@ int main() {
 
 	new TestReticle();
 	new TestSaucer();
+	TestSaucer* saucer = new TestSaucer();
+	saucer->setPosition(df::Vector(35, 8));
+	saucer->setVelocity(df::Vector( - 0.25, 0));
 
 	game_manager.run();
 

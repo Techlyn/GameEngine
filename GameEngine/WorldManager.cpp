@@ -161,11 +161,12 @@ return m_updates.insert(p_o);
 	ObjectList WorldManager::getCollisions(const Object* p_o, Vector where) {
 		// creates empty list
 		ObjectList collision_list;
+		Box b = getWorldBox(p_o, where);
 
 		// Iterate through all Objects.
 		for (int i = 0; i < m_updates.getCount(); i++) {
 			Object* p_temp_o = m_updates[i];
-			Box b = getWorldBox(p_o, where);
+			
 			Box b_temp = getWorldBox(p_temp_o);
 			if (p_temp_o != p_o) {
 				if(boxIntersectsBox(b, b_temp) && p_temp_o->isSolid()){

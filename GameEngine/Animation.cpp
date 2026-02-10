@@ -10,13 +10,9 @@ namespace df {
 	LogManager& Animation::log = LogManager::getInstance();
 
 	Animation::Animation() {
-
-		m_p_sprite = nullptr;
-		std::string m_name = "";
 		m_index = 0;
 		m_slowdown_count = 0;
-		m_transform = NONE;
-		m_box = Box();
+		
 	}
 
 	void Animation::setSprite(Sprite* p_new_sprite) {
@@ -90,10 +86,7 @@ namespace df {
 	Transform Animation::getTransform() const {
 		return m_transform;
 	}
-
-	void Animation::setBox(Box new_box) {
-		m_box = new_box;
-	}
+	
 
 	Box Animation::getBox() const {
 

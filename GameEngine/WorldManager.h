@@ -10,6 +10,7 @@
 #include "LogManager.h"
 #include "ObjectList.h"
 
+#define WM df::WorldManager::getInstance()
 
 
 namespace df {

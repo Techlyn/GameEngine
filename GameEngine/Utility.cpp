@@ -80,43 +80,30 @@ namespace df {
 
 	bool boxIntersectsBox(Box A, Box B) {
 		// Test horizontal overlap (x_overlap).
-		bool x_overlap = false;
-		if (B.getCorner().getX() <= A.getCorner().getX() && A.getCorner().getX() <= B.getCorner().getX() + B.getHorizontal()) {
-			if (A.getCorner().getX() <= B.getCorner().getX() && B.getCorner().getX() <= A.getCorner().getX() + A.getHorizontal()) {
-				x_overlap = true;
-			}
-		}
+		float A_left = A.getCorner().getX();
+		float A_right = A_left + A.getHorizontal();
+		float A_top = A.getCorner().getY();
+		float A_bottom = A_top + A.getVertical();
 
-		bool y_overlap = false;
-		if (B.getCorner().getY() <= A.getCorner().getY() && A.getCorner().getY() <= B.getCorner().getY() + B.getVertical()) {
-			if (A.getCorner().getY() <= B.getCorner().getY() && B.getCorner().getY() <= A.getCorner().getY() + A.getVertical()) {
-				y_overlap = true;
-			}
-		}
+		float B_left = B.getCorner().getX();
+		float B_right = B_left + B.getHorizontal();
+		float B_top = B.getCorner().getY();
+		float B_bottom = B_top + B.getVertical();
 
-		if (x_overlap && y_overlap) {
-			return true;
-		}
-		return false;
+		bool x_overlap = !(A_right <= B_left || A_left >= B_right);
+		bool y_overlap = !(A_bottom <= B_top || A_top >= B_bottom);
+
+		return x_overlap && y_overlap;
 	}
 
 
 	Box getWorldBox(const Object* p_o) {
-
-		Box box = p_o->getBox();
-		Vector corner = box.getCorner();
-
-		corner.setX(corner.getX() + p_o->getPosition().getX());
-		corner.setY(corner.getY() + p_o->getPosition().getY());
-		box.setCorner(corner);
-
-		return box;
-
+		return getWorldBox(p_o, p_o->getPosition());
 	}
 
 	Box getWorldBox(const Object* p_o, Vector where) {
 		
-		Box box = getWorldBox(p_o);
+		Box box = p_o->getBox();
 		Vector corner = box.getCorner();
 
 		corner.setX(corner.getX() + where.getX());
