@@ -205,9 +205,79 @@ return m_updates.insert(p_o);
 			}
 		}
 
+		Box orig_box = getWorldBox(p_o);  // original bounding box
+		p_o->setPosition(where);		  // move object
+		Box new_box = getWorldBox(p_o);
+
+		if (boxIntersectsBox(orig_box, m_boundary) && !boxIntersectsBox(new_box, m_boundary)) {
+			EventOut ov;
+			p_o->eventHandler(&ov);
+		}
+
 		// if here, no collision between two HARD objects so allow move.
-		p_o->setPosition(where);
+		//p_o->setPosition(where);
 		return 0;
+	}
+
+	void WorldManager::setBoundary(Box new_boundary) {
+		m_boundary = new_boundary;
+	}
+
+	Box WorldManager::getBoundary() const {
+		return m_boundary;
+	}
+
+	void WorldManager::setView(Box new_view) {
+		m_view = new_view;
+	}
+
+	Box WorldManager::getView() const {
+		return m_view;
+	}
+
+	void WorldManager::setViewPosition(Vector view_pos) {
+
+		// Make sure horizontal not out of world boundary.
+		float x = view_pos.getX() - m_view.getHorizontal() / 2;
+		if (x + m_view.getHorizontal() > m_boundary.getHorizontal()) {
+			x = m_boundary.getHorizontal() - m_view.getHorizontal();
+		}
+		if (x < 0) {
+			x = 0;
+		}
+
+		// Make sure vertical not out of world boundary.
+		float y = view_pos.getY() - m_view.getVertical() / 2;
+		if (y + m_view.getVertical() > m_boundary.getVertical()) {
+			y = m_boundary.getVertical() - m_view.getVertical();
+		}
+		if (y < 0) {
+			y = 0;
+		}
+
+		Vector new_corner(x, y);
+		m_view.setCorner(new_corner);
+	}
+
+	int WorldManager::setViewFollowing(Object* p_new_view_following) {
+
+		// Set to NULL to turn 'off' following.
+		if (p_new_view_following == NULL) {
+			p_view_following = NULL;
+			return 0;
+		}
+	
+		for (int i = 0; i < m_updates.getCount(); i++) {
+			if (m_updates[i] == p_new_view_following) {
+				p_view_following = p_new_view_following;
+				setViewPosition(p_view_following->getPosition());
+				return 0;
+			}
+
+			// if get here, was not legit. Don't change current view.
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! object set for viewing not found no changes made");
+
+		}
 	}
 
 }

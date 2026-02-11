@@ -35,6 +35,11 @@ namespace df {
 		ObjectList m_updates;	// All Objects in world to update.
 		ObjectList m_deletions;  // All Objects in world to delete.
 
+		Box m_boundary;			// World boundary.
+		Box m_view;				// Player view of game world.
+		
+		Object* p_view_following; // Object view is following.
+
 		
 
 
@@ -84,6 +89,27 @@ namespace df {
 		// If Object Spectral, move ok.
 		// Return 0 if move ok, else -1 if collision with solid.
 		int moveObject(Object* p_o, Vector where);
+
+		// Set game world boundary.
+		void setBoundary(Box new_boundary);
+
+		// Get game world boundary.
+		Box getBoundary() const;
+
+		// Set player view of game world.
+		void setView(Box new_view);
+
+		// Get player view of game world.
+		Box getView() const;
+
+		// Set view to center window on position view_pos.
+		// View edge will not go boyond world boundary.
+		void setViewPosition(Vector view_pos);
+
+		// Set view to center window on Object.
+		// Set to NULL to stop following.
+		// if p_new_view_follow not legit, return -1 else return 0.
+		int setViewFollowing(Object* p_new_view_following);
 
 	};
 

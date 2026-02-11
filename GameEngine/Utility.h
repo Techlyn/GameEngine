@@ -65,6 +65,8 @@ namespace df {
 
 		// Return distance between any two positions.
 		float distance(Vector p1, Vector p2);
+
+		Vector worldToView(Vector world_pos);
 		
 
 

@@ -10,6 +10,7 @@
 
 // engine includes
 #include "Utility.h"
+#include "WorldManager.h"
 
 
 namespace df {
@@ -203,6 +204,16 @@ namespace df {
 		float cornerDistance_sq = pow(circleDistance.getX() - b.getHorizontal() / 2, 2) + pow(circleDistance.getY() - b.getVertical() / 2, 2);
 
 		return (cornerDistance_sq <= pow(circle.getRadius(), 2));
+	}
+
+	Vector worldToView(Vector world_pos) {
+		Vector view_origin = WM.getView().getCorner();
+
+		float view_x = view_origin.getX();
+		float view_y = view_origin.getY();
+
+		Vector view_pos(world_pos.getX() - view_x, world_pos.getY() - view_y);
+		return view_pos;
 	}
 	
 } // namespace df

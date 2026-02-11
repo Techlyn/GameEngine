@@ -4,6 +4,7 @@
 
 #include "DisplayManager.h"
 #include "Colour.h"
+#include "Utility.h"
 
 
 
@@ -83,7 +84,9 @@ namespace df {
 		}
 
 		// Converts spaces (x,y) to pixels (x,y)
-		Vector pixel_pos = spaceToPixels(world_pos);
+		//Vector pixel_pos = spaceToPixels(world_pos);
+
+		Vector view_pos = worldToView(world_pos);
 
 		// Draw background rectangle since text is "see through" in SFML.
 		/*static sf::RectangleShape rectangle;
@@ -137,7 +140,7 @@ namespace df {
 		}
 
 		//Set position in window (in pixels)
-		text.setPosition(sf::Vector2f( pixel_pos.getX(), pixel_pos.getY() ));
+		text.setPosition(sf::Vector2f( view_pos.getX(), view_pos.getY() ));
 
 		m_p_window->draw(text);
 
