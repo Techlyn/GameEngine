@@ -83,10 +83,12 @@ namespace df {
 			return -1;
 		}
 
-		// Converts spaces (x,y) to pixels (x,y)
-		//Vector pixel_pos = spaceToPixels(world_pos);
-
+		
+		// Convert world pos to view
 		Vector view_pos = worldToView(world_pos);
+
+		// Convert space to pizels
+		Vector pixel_pos = spaceToPixels(view_pos);
 
 		// Draw background rectangle since text is "see through" in SFML.
 		/*static sf::RectangleShape rectangle;
@@ -140,7 +142,7 @@ namespace df {
 		}
 
 		//Set position in window (in pixels)
-		text.setPosition(sf::Vector2f( view_pos.getX(), view_pos.getY() ));
+		text.setPosition(sf::Vector2f( pixel_pos.getX(), pixel_pos.getY() ));
 
 		m_p_window->draw(text);
 

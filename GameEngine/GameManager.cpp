@@ -48,6 +48,12 @@ namespace df {
 		DisplayManager& display_manager = DisplayManager::getInstance();
 		world_manager.startUp();
 		display_manager.startUp();
+
+		Box* boundary = new Box();
+		boundary->setHorizontal(DM.getHorizontal());
+		boundary->setVertical(DM.getVertical());
+		WM.setBoundary(*boundary);
+		WM.setView(WM.getBoundary());
 	
 	
 		Manager::startUp();

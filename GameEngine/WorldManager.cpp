@@ -214,8 +214,9 @@ return m_updates.insert(p_o);
 			p_o->eventHandler(&ov);
 		}
 
-		// if here, no collision between two HARD objects so allow move.
-		//p_o->setPosition(where);
+		if (p_view_following == p_o) {
+			setViewPosition(p_o->getPosition());
+		}
 		return 0;
 	}
 
@@ -274,10 +275,9 @@ return m_updates.insert(p_o);
 				return 0;
 			}
 
-			// if get here, was not legit. Don't change current view.
-			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! object set for viewing not found no changes made");
-
 		}
+		LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! object set for viewing not legit no changes made");
+		return -1;
 	}
 
 }
