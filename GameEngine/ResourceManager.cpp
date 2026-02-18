@@ -263,6 +263,46 @@ namespace df {
 				return m_sound[i];
 			}
 		}
+		return NULL;
 	}
+
+	int ResourceManager::loadMusic(std::string filename, std::string label) {
+		if (m_music_count == MAX_MUSICS) {
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Music array full");
+			return -1;
+		}
+		if (m_music[m_music_count]->loadMusic(filename) == -1) {
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Unable to add file to Resource manager");
+			return -1;
+		}
+
+		m_music[m_music_count]->setLabel(label);
+		++m_music_count;
+		return 0;
+	}
+
+	int ResourceManager::unloadMusic(std::string label) {
+		for (int i = 0; i < m_music_count - 1; i++) {
+			if (label == m_music[i]->getLabel()) {
+				for (int j = 0; j < m_music_count - 2; j++) {
+					m_music[j] = m_music[j + 1];
+				}
+				--m_music_count;
+				return 0;
+			}
+		}
+		return -1;
+	}
+
+	Music* ResourceManager::getMusic(std::string label) {
+		for (int i = 0; i < m_music_count - 1; i++) {
+			if (label == m_music[i]->getLabel()) {
+				return m_music[i];
+			}
+		}
+		return NULL;
+	}
+
+	
 
 } // end namespace df

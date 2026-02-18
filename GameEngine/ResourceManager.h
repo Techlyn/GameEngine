@@ -35,7 +35,7 @@ namespace df {
 
 		Sound *m_sound[MAX_SOUNDS];
 		int m_sound_count;
-		Music m_music[MAX_MUSICS];
+		Music* m_music[MAX_MUSICS];
 		int m_music_count;
 
 	public:
@@ -78,7 +78,15 @@ namespace df {
 
 		/// Associated file with Music.
 		// Return 0 if ok, else -1.
+		int loadMusic(std::string filename, std::string label);
 
+		// Remove label for Music with indicated label.
+		// Return 0 if ok, else -1.
+		int unloadMusic(std::string label);
+
+		// Find Music with indicated label.
+		// Return pointer to it if found, else NULL.
+		Music* getMusic(std::string label);
 
 	}; // end class ResourceManager
 
