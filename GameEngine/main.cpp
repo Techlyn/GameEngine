@@ -14,6 +14,7 @@
 #include "EventCollision.h"
 #include "ResourceManager.h"
 #include "Circle.h"
+#include "Sound.h"
 
 int displayTest();
 void displayManagerTest();
@@ -25,7 +26,6 @@ public:
 	TestReticle();
 	int draw() override;
 	int eventHandler(const df::Event* p_e) override;
-	void collision(const df::EventCollision* p_c);
 };
 
 TestReticle::TestReticle() {
@@ -54,37 +54,12 @@ int TestReticle::eventHandler(const df::Event* p_e) {
 			return 1;
 		}
 	}
-
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision* p_col_event = dynamic_cast<const df::EventCollision*> (p_e);
-		collision(p_col_event);
-		return 1;
-	}
-	return 0;
-	
-	//if (p_e->getType() == df::OUT_EVENT) {
-	//	const df::EventOut* p_out_e = dynamic_cast<const df::EventOut*>(p_e);
-	//	if (p_out_e->getType() == df::OUT_EVENT) {
-	//		df::LogManager::getInstance().writeLog("%s: received OUT_EVENT", __func__);
-	//		out();
-	//	}
-	//}
-	return 0;
 }
-void TestReticle::collision(const df::EventCollision* p_c) {
-	if ((p_c->getObject1()->getType() == "TestReticle") && (p_c->getObject2()->getType() == "TestReticle")) {
-		return;
-	}
-	if ((p_c->getObject1()->getType() == "TestSaucer") || (p_c->getObject2()->getType() == "TestSaucer")) {
-		LM.writeLog("Reticle and saucer interacted with each other!");
-	}
-}
-
-//void TestObject::out(){
-//	df::WorldManager::getInstance().markForDelete(this);
-//}
 
 class TestSaucer : public df::Object {	
+private: 
+	df::Sound m_sound;
+	bool t;
 public:
 	TestSaucer();
 	
@@ -101,11 +76,13 @@ TestSaucer::TestSaucer() {
 
 	setSolidness(df::HARD);
 	
-	
-
 	df::Vector p(15, 8);
 
+	m_sound.loadSound("beep.wav");
+
 	setPosition(p);
+
+	bool t = false;
 }
 
 
@@ -121,6 +98,21 @@ int TestSaucer::eventHandler(const df::Event* p_e) {
 		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
 		collision(p_collision_event);
 		return 1;
+	}
+
+	if (p_e->getType() == df::KEYBOARD_EVENT) {
+		const df::EventKeyboard* p_keyboard_event = dynamic_cast <const df::EventKeyboard*> (p_e);
+		if (p_keyboard_event->getKey() == df::Keyboard::B) {
+			LM.writeLog("key state is: %d", p_keyboard_event->getKeyboardAction());
+			
+			if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED && t == false) {
+				m_sound.play();
+				t = true;
+			}
+			if (p_keyboard_event->getKeyboardAction() == df::KEY_RELEASED) {
+				t = false;
+			}
+		}
 	}
 }
 

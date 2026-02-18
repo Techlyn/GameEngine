@@ -35,6 +35,7 @@ namespace df {
 		window->setKeyRepeatEnabled(false);
 
 		Manager::startUp();
+		return 0;
 	}
 
 	void InputManager::shutDown() {
@@ -78,6 +79,7 @@ namespace df {
 				
 				p_kb_event->setKeyboardAction(KEY_RELEASED);
 				p_kb_event->setKey(getDfKey(key));
+				onEvent(p_kb_event);
 
 			}
 			else if (p_e->is <sf::Event::MouseMoved>()) {

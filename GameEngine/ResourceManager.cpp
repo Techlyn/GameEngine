@@ -23,6 +23,13 @@ namespace df {
 		for (int i = 0; i < MAX_SPRITES; i++) {
 			m_p_sprite[i] = nullptr;
 		}
+
+		m_sound_count = 0;
+		m_music_count = 0;
+
+		for (int i = 0; i < MAX_SOUNDS; i++) {
+			m_sound[i] = nullptr;
+		}
 		
 	}
 
@@ -218,6 +225,43 @@ namespace df {
 			Frame test = m_p_sprite[0]->getFrame(i);
 			LM.writeLog("frame: %d\n", i + 1);
 			std::cout << test.getString() << std::endl;
+		}
+	}
+
+	int ResourceManager::loadSound(std::string filename, std::string label) {
+		if (m_sound_count == MAX_SOUNDS) {
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Sound array full.");
+			return -1;
+		}
+		if (m_sound[m_sound_count]->loadSound(filename) == -1) {
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Unable to add file to resource manager.");
+			return -1;
+		}
+
+		m_sound[m_sound_count]->setLabel(label);
+		++m_sound_count;
+		return 0;
+	}
+
+	int ResourceManager::unloadSound(std::string label) {
+		for (int i = 0; i < m_sound_count - 1; i++) {
+			if (label == m_sound[i]->getLabel()) {
+				for (int j = 0; j < m_sound_count - 2; j++) {
+					m_sound[j]->~Sound(); 
+					m_sound[j] = m_sound[j + 1];
+				}
+				--m_sound_count;
+				return 0;
+			}
+		}
+		return -1;
+	}
+
+	Sound* ResourceManager::getSound(std::string label) {
+		for (int i = 0; i < m_sound_count - 1; i++) {
+			if (label == m_sound[i]->getLabel()) {
+				return m_sound[i];
+			}
 		}
 	}
 
