@@ -13,8 +13,6 @@ namespace df {
 	class Sprite {
 
 	private:
-
-		static LogManager& log;
 		std::string CLASS_NAME = "Sprite";
 
 		int m_width;			// Sprtie Width.

@@ -6,6 +6,9 @@
 #include "DisplayManager.h"
 #include "GameManager.h"
 
+#include "EventKeyboard.h"
+#include "EventMouse.h"
+
 namespace df {
 
 	InputManager::InputManager() {
@@ -274,6 +277,17 @@ namespace df {
 			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Undefined mouse input pressed");
 			return Mouse::Button::UNDEFINED_MOUSE_BUTTON;
 		}
+	}
+
+	bool InputManager::isValid(std::string event_type) const {
+		if (event_type == MSE_EVENT) {
+			return true;
+		}
+		else if (event_type == KEYBOARD_EVENT) {
+			return true;
+		}
+		
+		return false;
 	}
 
 } // namespace df

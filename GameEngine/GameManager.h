@@ -9,7 +9,7 @@
 #include "Manager.h"
 #include "LogManager.h"
 
-#define GM df::GameManager::getInstance();
+#define GM df::GameManager::getInstance()
 
 const int FRAME_TIME_DEFAULT = 33;
 
@@ -51,6 +51,9 @@ namespace df {
 		// Return frame time.
 		// Frame time is target time for game loop, in milliseconds.
 		int getFrameTime() const;
+
+		// Accepts GameManager Events
+		bool isValid(std::string event_type) const;
 	}; // end class GameManager
 } // end namespace df
 #endif // end of __GAME_MANAGER_H__

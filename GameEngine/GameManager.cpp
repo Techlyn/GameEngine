@@ -136,5 +136,15 @@ namespace df {
 		return frame_time;
 	}
 
+	bool GameManager::isValid(std::string event_type) const {
+		if (event_type == STEP_EVENT) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	
+
 
 }

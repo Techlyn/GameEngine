@@ -14,7 +14,7 @@
 #include "EventKeyboard.h"
 #include "EventMouse.h"
 
-#define IM df::InputManager.getInstance()
+#define IM df::InputManager::getInstance()
 
 
 namespace df {
@@ -46,6 +46,8 @@ namespace df {
 		Keyboard::Key getDfKey(sf::Keyboard::Key key) const;
 
 		Mouse::Button getDfButton(sf::Mouse::Button button) const;
+
+		bool isValid(std::string event_type) const;
 
 
 	};

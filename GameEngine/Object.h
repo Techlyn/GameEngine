@@ -9,7 +9,6 @@
 #include <string>
 
 // Engine includes
-#include "LogManager.h"
 #include "Event.h"
 #include "Vector.h"
 #include "Animation.h"
@@ -22,12 +21,12 @@ namespace df {
 		SOFT,		// Object causes collisions, but does not impede.
 		SPECTRAL,	// Object doesn't cause collisions.
 	};
-
 	
+	const int MAX_OBJ_EVENTS = 100;
+
 
 	class Object {
 
-		static LogManager& log;
 		std::string CLASS_NAME = "Object";
 
 		int m_id;				// Object unique identifier
@@ -40,6 +39,9 @@ namespace df {
 		bool m_no_soft;			// True if object should not cause soft collisions (default is false).
 		Animation m_animation;   // Animation associated with Object.
 		Box m_box;				// Box for sprite boundary & collisions
+
+		int event_count;
+		std::string event_name[MAX_OBJ_EVENTS];
 
 
 	public:
@@ -138,6 +140,15 @@ namespace df {
 
 		// Get Object's bounding box.
 		Box getBox() const;
+		
+		// Register for interest in event.
+		// Keeps track of manager an event.
+		// Returns 0 if ok, else -1.
+		int registeredInterest(std::string event_type);
+
+		// Unregister for interest in event.
+		// Return 0 if ok, else -1.
+		//int unregisterInterest(std::string event_type);
 
 
 

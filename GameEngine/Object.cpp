@@ -5,20 +5,18 @@
 #include "Object.h"
 #include "WorldManager.h"
 #include "ResourceManager.h"
+#include "GameManager.h"
+#include "InputManager.h"
+#include "EventStep.h"
 
 
 
 namespace df {
 
-	
-	LogManager& Object::log = LogManager::getInstance();
-
-	
-
 	Object::Object()
 	{
 		
-		log.writeLog(CLASS_NAME, LogManager::LOG_DEBUG, "%s: created at %p", __func__, this);
+		LM.writeLog(CLASS_NAME, LM.LOG_DEBUG, "%s: created at %p", __func__, this);
 
 		// initialized variables
 		static int id_count = 0;
@@ -38,7 +36,7 @@ namespace df {
 	}
 
 	Object::~Object() {
-		log.writeLog(CLASS_NAME, LogManager::LOG_DEBUG, "%s, Object id %p, destroyed", __func__, this);
+		LM.writeLog(CLASS_NAME, LM.LOG_DEBUG, "%s, Object id %p, destroyed", __func__, this);
 	
 		WorldManager::getInstance().removeObject(this);
 	}
@@ -74,7 +72,7 @@ namespace df {
 
 	int Object::setAltitude(int new_altitude) {
 		if (new_altitude < 0 || new_altitude > MAX_ALTITUDE) {
-			log.writeLog(CLASS_NAME, LogManager::LOG_ERROR, "Error! incorrect altitude set");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! incorrect altitude set");
 			return -1;
 		}
 		m_altitude = new_altitude;
@@ -136,7 +134,7 @@ namespace df {
 
 	int Object::setSolidness(Solidness new_solid) {
 		if (new_solid != Solidness::HARD && new_solid != Solidness::SOFT && new_solid != Solidness::SPECTRAL) {
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Incorrect solidness set");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Incorrect solidness set");
 			return -1;
 		}
 
@@ -160,7 +158,7 @@ namespace df {
 	int Object::setSprite(std::string sprite_label) {
 		Sprite* p_sprite = RM.getSprite(sprite_label);
 		if (p_sprite == nullptr) {
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error sprite pointer NULL");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error sprite pointer NULL");
 			return -1;
 		}
 
@@ -185,5 +183,26 @@ namespace df {
 		return m_box;
 	}
 
+	int Object::registeredInterest(std::string event_type) {
+		if (event_count == MAX_OBJ_EVENTS) {
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! object event full");
+			return -1;
+		}
+
+		if (event_type == STEP_EVENT) {
+			GM.registerInterest(this, event_type);
+		}
+		else if (event_type == KEYBOARD_EVENT) {
+			IM.registerInterest(this, event_type);
+		}
+		else if (event_type == MSE_EVENT) {
+			IM.registerInterest(this, event_type);
+		}
+		else {
+			WM.registerInterest(this, event_type);
+		}
+
+		return 0;
+	}
 
 }

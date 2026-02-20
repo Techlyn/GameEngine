@@ -2,15 +2,15 @@
 //	ObjectListIterator.cpp
 // 
 
+#include "LogManager.h"
 #include "ObjectListIterator.h"
 #include "ObjectList.h"
 
 namespace df {
 
-	LogManager& ObjectListIterator::log = LogManager::getInstance();
 
 	ObjectListIterator::ObjectListIterator() {
-		log.writeLog(CLASS_NAME, LogManager::LOG_INFO, "%s: created at %p", __func__, this);
+		LM.writeLog(CLASS_NAME, LM.LOG_INFO, "%s: created at %p", __func__, this);
 
 		m_index = 0;
 		m_p_list = nullptr;

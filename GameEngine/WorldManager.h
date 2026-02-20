@@ -9,11 +9,14 @@
 #include "Manager.h"
 #include "LogManager.h"
 #include "ObjectList.h"
+#include "Box.h"
 
 #define WM df::WorldManager::getInstance()
 
 
 namespace df {
+
+	class Object;
 
 	const int MAX_ALTITUDE = 4;
 

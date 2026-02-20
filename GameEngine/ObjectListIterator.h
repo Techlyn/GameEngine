@@ -5,18 +5,16 @@
 #ifndef __OBJECT_LIST_ITERATOR_H__
 #define __OBJECT_LIST_ITERATOR_H__
 
-#include "Object.h"
-#include "ObjectList.h"
+#include <string>
 
 namespace df {
 
 	class ObjectList;
+	class Object;
 
 	class ObjectListIterator {
 
 	private:
-
-		static LogManager& log;
 		std::string CLASS_NAME = "ObjectListIterator";
 
 		ObjectListIterator();      // Must be given list when created.

@@ -7,8 +7,6 @@
 
 namespace df {
 
-	LogManager& Sprite::log = LogManager::getInstance();
-
 	Sprite::Sprite() {
 		m_frame_count = 0;
 		m_width = 0;
@@ -69,7 +67,7 @@ namespace df {
 
 	int Sprite::addFrame(Frame new_frame) {
 		if (m_frame_count == m_max_frame_count) {
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Sprite frame array full");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Sprite frame array full");
 			return -1;
 		}
 
@@ -104,7 +102,7 @@ namespace df {
 
 	int Sprite::draw(int frame_number, Vector position) const {
 		if (frame_number < 0 || frame_number >= m_frame_count) {
-			log.writeLog(CLASS_NAME, log.LOG_ERROR, "Error! Sprite frame number out of range");
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Sprite frame number out of range");
 			return -1;
 		}
 

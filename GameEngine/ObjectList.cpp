@@ -8,8 +8,6 @@
 
 namespace df {
 
-	LogManager& ObjectList::log = LogManager::getInstance();
-
 	ObjectList::ObjectList()
 		: m_count(0)
 	{
@@ -37,7 +35,7 @@ namespace df {
 
 	int ObjectList::insert(Object* p_o) {
 		if (m_count == MAX_OBJECTS || p_o == nullptr) {
-			log.writeLog(CLASS_NAME, LogManager::LOG_ERROR, "%s object inserted failed", __func__);
+			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "%s object inserted failed", __func__);
 			return -1;
 		}
 
@@ -129,7 +127,7 @@ namespace df {
 		return big_list;
 	}
 
-	void ObjectList::listList() {
+	void ObjectList::listList() const {
 		LM.writeLog("%s Listing all in generated object list",__func__);
 		LM.writeLog("i\tpointer");
 		for (int i = 0; i < MAX_OBJECTS; i++) {

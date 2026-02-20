@@ -5,24 +5,23 @@
 #ifndef __OBJECT_LIST_H__
 #define __OBJECT_LIST_H__
 
-const int MAX_OBJECTS = 1000;
-
+// System includes
+#include <string>
 
 // Engine Includes
-#include "Object.h"
 #include "ObjectListIterator.h"
+
+const int MAX_OBJECTS = 1000;
 
 namespace df {
 
-
+	class Object;
 
 	class ObjectList {
 
 	friend class ObjectListIterator;
 
 	private:
-
-		static LogManager& log;
 		std::string CLASS_NAME = "ObjectList";
 
 		int m_count;				  // Count of objects in list.
@@ -66,7 +65,7 @@ namespace df {
 		ObjectList operator+(ObjectList list);
 
 		//lists object pointers in the array, call for debugging
-		void listList();
+		void listList() const;
 
 	};
 

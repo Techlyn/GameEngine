@@ -32,7 +32,7 @@ namespace df {
 
 	void Music::play(bool loop) {
 		m_music.setLooping(loop);
-		m_music.play()
+		m_music.play();
 	}
 
 	void Music::stop() {
