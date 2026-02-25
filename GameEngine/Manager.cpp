@@ -60,10 +60,9 @@ namespace df {
        int count = 0;
        ObjectList all_objects = WorldManager::getInstance().getAllObjects();
 
-       for (int i = 0; i < event_count - 1; i++) {
+       for (int i = 0; i < event_count; i++) {
            if (event[i] == p_e->getType()) {
-               for (int j = 0; obj_list[i].getCount(); j++) {
-                   //ObjectList o_l = obj_list[i];
+               for (int j = 0; j < obj_list[i].getCount(); j++) {
                    ObjectList o_l = obj_list[i];
                    o_l[j]->eventHandler(p_e);
                    ++count;
@@ -79,7 +78,7 @@ namespace df {
       
        
            // Check to see if event has been added previously.
-           for (int i = 0; i < event_count - 1; i++) {
+           for (int i = 0; i < event_count; i++) {
                if (event[i] == event_type) {
                    obj_list[i].insert(p_o);
                    return 0;
@@ -92,18 +91,15 @@ namespace df {
                return -1;
            }
 
-           for (int i = 0; i < event_count - 1; i++) {
-
-               if (isValid(event[i])) {
-
-                   event[event_count] = event_type;
-                   obj_list[event_count].clear();
-                   obj_list[event_count].insert(p_o);
-                   ++event_count;
-                   LM.writeLog(CLASS_NAME, LM.LOG_DEBUG, "Success, event added to register");
-                   return 0;
-               }
+           if (isValid(event_type)) {
+               event[event_count] = event_type;
+               obj_list[event_count].clear();
+               obj_list[event_count].insert(p_o);
+               ++event_count;
+               LM.writeLog(CLASS_NAME, LM.LOG_DEBUG, "Success, event added to register at: %s", m_type);
+               return 0;
            }
+
 
        return -1;
    }
@@ -111,7 +107,7 @@ namespace df {
    int Manager::unregisterInterest(Object* p_o, std::string event_type) {
 
        // Check for event.
-       for (int i = 0; i < event_count - 1; i++) {
+       for (int i = 0; i < event_count; i++) {
            if (event[i] == event_type) {
                obj_list[i].remove(p_o);
            }

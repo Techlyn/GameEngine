@@ -33,7 +33,7 @@ TestReticle::TestReticle() {
 	setAltitude(df::MAX_ALTITUDE);
 	setSolidness(df::HARD);
 	df::Vector p(0, 0);
-
+	registeredInterest(df::MSE_EVENT);
 	setPosition(p);
 
 	

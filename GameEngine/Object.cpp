@@ -208,6 +208,8 @@ namespace df {
 		else if (event_type == OUT_EVENT) {
 			WM.registerInterest(this, event_type);
 		}
+		else
+			WM.registerInterest(this, event_type);
 	
 
 		return 0;
