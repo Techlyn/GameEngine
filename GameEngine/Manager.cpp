@@ -76,26 +76,36 @@ namespace df {
     }
 
    int Manager::registerInterest(Object* p_o, std::string event_type) {
-
-       // Check to see if event has been added previously.
-       for (int i = 0; i < event_count - 1; i++) {
-           if (event[i] == event_type) {
-               obj_list[i].insert(p_o);
-               return 0;
+      
+       
+           // Check to see if event has been added previously.
+           for (int i = 0; i < event_count - 1; i++) {
+               if (event[i] == event_type) {
+                   obj_list[i].insert(p_o);
+                   return 0;
+               }
            }
-       }
 
-       // Otherwise, new event.
-       if (event_count >= MAX_EVENTS) {
-           LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Event List is full");
-           return -1;
-       }
-       event[event_count] = event_type;
-       obj_list[event_count].clear();
-       obj_list[event_count].insert(p_o);
-       ++event_count;
-       LM.writeLog(CLASS_NAME, LM.LOG_DEBUG, "Success, event added to register");
-       return 0;
+           // Otherwise, new event.
+           if (event_count >= MAX_EVENTS) {
+               LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! Event List is full");
+               return -1;
+           }
+
+           for (int i = 0; i < event_count - 1; i++) {
+
+               if (isValid(event[i])) {
+
+                   event[event_count] = event_type;
+                   obj_list[event_count].clear();
+                   obj_list[event_count].insert(p_o);
+                   ++event_count;
+                   LM.writeLog(CLASS_NAME, LM.LOG_DEBUG, "Success, event added to register");
+                   return 0;
+               }
+           }
+
+       return -1;
    }
 
    int Manager::unregisterInterest(Object* p_o, std::string event_type) {

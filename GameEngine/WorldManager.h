@@ -114,6 +114,8 @@ namespace df {
 		// if p_new_view_follow not legit, return -1 else return 0.
 		int setViewFollowing(Object* p_new_view_following);
 
+		bool isValid(std::string event_type) const;
+
 	};
 
 }

@@ -280,4 +280,14 @@ return m_updates.insert(p_o);
 		return -1;
 	}
 
+	bool WorldManager::isValid(std::string event_type) const {
+		if (event_type == OUT_EVENT) {
+			return true;
+		}
+		if (event_type == COLLISION_EVENT) {
+			return true;
+		}
+		return false;
+	}
+
 }

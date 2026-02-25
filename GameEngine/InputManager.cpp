@@ -283,7 +283,7 @@ namespace df {
 		if (event_type == MSE_EVENT) {
 			return true;
 		}
-		else if (event_type == KEYBOARD_EVENT) {
+		if (event_type == KEYBOARD_EVENT) {
 			return true;
 		}
 		

@@ -8,6 +8,8 @@
 #include "GameManager.h"
 #include "InputManager.h"
 #include "EventStep.h"
+#include "EventCollision.h"
+#include "EventOut.h"
 
 
 
@@ -29,6 +31,8 @@ namespace df {
 		m_speed = 0.0;
 		m_solidness = Solidness::HARD;
 		m_no_soft = false;
+
+		event_count = 0;
 
 		WorldManager::getInstance().insertObject(this);
 
@@ -198,9 +202,13 @@ namespace df {
 		else if (event_type == MSE_EVENT) {
 			IM.registerInterest(this, event_type);
 		}
-		else {
+		else if (event_type == COLLISION_EVENT) {
 			WM.registerInterest(this, event_type);
 		}
+		else if (event_type == OUT_EVENT) {
+			WM.registerInterest(this, event_type);
+		}
+	
 
 		return 0;
 	}

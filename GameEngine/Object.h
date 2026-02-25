@@ -148,7 +148,7 @@ namespace df {
 
 		// Unregister for interest in event.
 		// Return 0 if ok, else -1.
-		//int unregisterInterest(std::string event_type);
+		int unregisterInterest(std::string event_type);
 
 
 
