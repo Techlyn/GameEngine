@@ -96,7 +96,7 @@ namespace df {
                obj_list[event_count].clear();
                obj_list[event_count].insert(p_o);
                ++event_count;
-               LM.writeLog(CLASS_NAME, LM.LOG_DEBUG, "Success, event added to register at: %s", m_type);
+               LM.writeLog(CLASS_NAME, LM.LOG_DEBUG, "Success, event added to register at: %s", m_type.c_str());
                return 0;
            }
 

@@ -6,6 +6,7 @@
 #include <ctime>
 #include <stdio.h>
 #include <math.h>
+#include <sstream>
 
 
 // engine includes
@@ -14,6 +15,8 @@
 
 
 namespace df {
+
+	using std::stringstream;
 
 
 	char* getTimeString() {
@@ -214,6 +217,23 @@ namespace df {
 
 		Vector view_pos(world_pos.getX() - view_x, world_pos.getY() - view_y);
 		return view_pos;
+	}
+
+	Vector viewToWorld(Vector view_pos) {
+		Vector view_origin = WM.getView().getCorner();
+
+		float view_x = view_origin.getX();
+		float view_y = view_origin.getY();
+
+
+		Vector world_pos(view_pos.getX() + view_x, view_pos.getY() + view_y);
+		return world_pos;
+	}
+
+	std::string toString(int i) {
+		std::stringstream ss;
+		ss << i;
+		return ss.str();
 	}
 	
 } // namespace df

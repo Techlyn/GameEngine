@@ -8,6 +8,7 @@
 #include "Utility.h"
 #include "EventCollision.h"
 #include "EventOut.h"
+#include "ViewObject.h"
 
 namespace df {
 
@@ -130,7 +131,11 @@ return m_updates.insert(p_o);
 		for (int alt = 0; alt <= MAX_ALTITUDE; alt++) {
 			for (int i = 0; i < m_updates.getCount(); i++) {
 				if (m_updates[i]->getAltitude() == alt) {
-					m_updates[i]->draw();
+					Box temp_box = getWorldBox(m_updates[i]);
+					if (boxIntersectsBox(temp_box, m_view) || dynamic_cast<ViewObject *> (m_updates[i])) {
+						m_updates[i]->draw();
+					}
+					
 				}
 			}
 		}

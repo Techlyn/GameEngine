@@ -67,6 +67,12 @@ namespace df {
 		float distance(Vector p1, Vector p2);
 
 		Vector worldToView(Vector world_pos);
+
+		Vector viewToWorld(Vector view_pos);
+
+		std::string toString(int i);
+
+		
 		
 
 

@@ -157,6 +157,8 @@
     <ClCompile Include="EventKeyboard.cpp" />
     <ClCompile Include="EventMouse.cpp" />
     <ClCompile Include="EventStep.cpp" />
+    <ClCompile Include="EventView.cpp" />
+    <ClCompile Include="EventView.h" />
     <ClCompile Include="EvetOut.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="ViewObject.cpp" />
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +209,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="ViewObject.h" />
     <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -12,16 +12,22 @@
 #include "EventKeyboard.h"
 #include "EventOut.h"
 #include "EventCollision.h"
+#include "EventStep.h"
+#include "EventView.h"
 #include "ResourceManager.h"
 #include "Circle.h"
 #include "Sound.h"
+#include "ViewObject.h"
 
 int displayTest();
 void displayManagerTest();
 
 #define RETICLE_CHAR '+'
+#define POINTS_STRING "Points"
 
 class TestReticle : public df::Object {
+	int points;
+	df::ViewObject* p_vo;
 public:
 	TestReticle();
 	int draw() override;
@@ -34,7 +40,16 @@ TestReticle::TestReticle() {
 	setSolidness(df::HARD);
 	df::Vector p(0, 0);
 	registeredInterest(df::MSE_EVENT);
+	registeredInterest(df::STEP_EVENT);
 	setPosition(p);
+
+	points = 0;
+
+	p_vo = new df::ViewObject;
+	p_vo->setViewString(POINTS_STRING);
+	p_vo->setValue(points);
+	p_vo->setLocation(df::TOP_RIGHT);
+	p_vo->setColour(df::YELLOW);
 
 	
 }
@@ -54,6 +69,15 @@ int TestReticle::eventHandler(const df::Event* p_e) {
 			return 1;
 		}
 	}
+	if (p_e->getType() == df::STEP_EVENT) {
+
+		if (dynamic_cast<const df::EventStep*> (p_e)->getStepCount() % 30 == 0) {
+			df::EventView ev(POINTS_STRING, points, true);
+			WM.onEvent(&ev);
+			points++;
+		}
+		return 1;
+	}
 }
 
 class TestSaucer : public df::Object {	
@@ -63,7 +87,6 @@ private:
 public:
 	TestSaucer();
 	
-	void collision(const df::EventCollision* p_c);
 	void moveToStart();
 	void out();
 
@@ -94,11 +117,6 @@ int TestSaucer::eventHandler(const df::Event* p_e) {
 		return 1;
 	}
 
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
-		collision(p_collision_event);
-		return 1;
-	}
 
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const df::EventKeyboard* p_keyboard_event = dynamic_cast <const df::EventKeyboard*> (p_e);
@@ -116,11 +134,6 @@ int TestSaucer::eventHandler(const df::Event* p_e) {
 	}
 }
 
-void TestSaucer::collision(const df::EventCollision* p_c) {
-	if ((p_c->getObject1()->getType() == "TestSaucer") && (p_c->getObject2()->getType() == "TestSaucer")) {
-		return;
-	}
-}
 
 void TestSaucer::moveToStart() {
 	df::Vector temp_pos;
@@ -158,6 +171,7 @@ int main() {
 	TestSaucer* saucer = new TestSaucer();
 	saucer->setPosition(df::Vector(35, 8));
 	saucer->setVelocity(df::Vector( - 0.25, 0));
+
 
 	game_manager.run();
 

@@ -21,7 +21,7 @@ namespace df {
 		SOFT,		// Object causes collisions, but does not impede.
 		SPECTRAL,	// Object doesn't cause collisions.
 	};
-	
+
 	const int MAX_OBJ_EVENTS = 100;
 
 
