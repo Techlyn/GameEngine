@@ -25,17 +25,17 @@ void displayManagerTest();
 #define RETICLE_CHAR '+'
 #define POINTS_STRING "Points"
 
-class TestReticle : public df::Object {
+class Reticle : public df::Object {
 	int points;
 	df::ViewObject* p_vo;
 public:
-	TestReticle();
+	Reticle();
 	int draw() override;
 	int eventHandler(const df::Event* p_e) override;
 };
 
-TestReticle::TestReticle() {
-	setType("TestReticle");
+Reticle::Reticle() {
+	setType("Reticle");
 	setAltitude(df::MAX_ALTITUDE);
 	setSolidness(df::HARD);
 	df::Vector p(0, 0);
@@ -54,13 +54,13 @@ TestReticle::TestReticle() {
 	
 }
 
-int TestReticle::draw(void) {
+int Reticle::draw(void) {
 	return DM.drawCh(getPosition(), RETICLE_CHAR, df::RED);
 }
 
 
 
-int TestReticle::eventHandler(const df::Event* p_e) {
+int Reticle::eventHandler(const df::Event* p_e) {
 
 	if (p_e->getType() == df::MSE_EVENT) {
 		const df::EventMouse* p_mouse_event = dynamic_cast<const df::EventMouse*> (p_e);
@@ -72,8 +72,7 @@ int TestReticle::eventHandler(const df::Event* p_e) {
 	if (p_e->getType() == df::STEP_EVENT) {
 
 		if (dynamic_cast<const df::EventStep*> (p_e)->getStepCount() % 30 == 0) {
-			df::EventView ev(POINTS_STRING, points, true);
-			WM.onEvent(&ev);
+			p_vo->setValue(points);
 			points++;
 		}
 		return 1;
@@ -166,7 +165,7 @@ int main() {
 	RM.loadSprite("saucer.txt", "saucer");
 	game_manager.startUp();
 
-	new TestReticle();
+	new Reticle();
 	new TestSaucer();
 	TestSaucer* saucer = new TestSaucer();
 	saucer->setPosition(df::Vector(35, 8));

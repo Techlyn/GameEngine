@@ -103,10 +103,10 @@ namespace df {
 
 			EventStep es;
 			onEvent(&es);
-			input_manager.getInput();
-			world_manager.update();
-			world_manager.draw();
-			display_manager.swapBuffer();
+			IM.getInput();
+			WM.update();
+			WM.draw();
+			DM.swapBuffer();
 
 			long int loop_time = clock.split();
 			long int intended_sleep_time = frame_time - loop_time - adjust_time;
