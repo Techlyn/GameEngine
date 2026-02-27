@@ -18,20 +18,20 @@ namespace df {
 		
 		const std::string CLASS_NAME = "EventStep";
 
-		int m_step_count;
+		long long m_step_count;
 
 	public:
 
 		// Default constructor.
 		EventStep();
 
-		EventStep(int init_step_count);
+		EventStep(long long init_step_count);
 
 		// Set step count.
-		void setStepCount(int new_step_count);
+		void setStepCount(long long new_step_count);
 
 		// Get step count.
-		int getStepCount() const;
+		long long getStepCount() const;
 
 
 	};

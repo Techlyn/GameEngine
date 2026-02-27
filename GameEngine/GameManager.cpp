@@ -86,22 +86,29 @@ namespace df {
 	}
 
 	void GameManager::run() {
-		WorldManager& world_manager = WorldManager::getInstance();
-		DisplayManager& display_manager = DisplayManager::getInstance();
-		InputManager& input_manager = InputManager::getInstance();
 		Clock clock;
 		
 		int long adjust_time{ 0 };
+		long long count{ 0 };
 
 		
 		
 		
 
 		while (!game_over) {
-		//start time
+		
+			// This is in place for windows, when
+		/*	MSG msg;
+			while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}*/
+
+			//start time
 			clock.delta();
 
 			EventStep es;
+			es.setStepCount(count);
 			onEvent(&es);
 			IM.getInput();
 			WM.update();
@@ -110,16 +117,25 @@ namespace df {
 
 			long int loop_time = clock.split();
 			long int intended_sleep_time = frame_time - loop_time - adjust_time;
-			clock.delta();
-			// whatever frame-time is left sleep for that time till next frame.
-			if(intended_sleep_time > 0)
-				Sleep(intended_sleep_time);
+			
 
-			int long actual_sleep_time = clock.split();
-			adjust_time = actual_sleep_time - intended_sleep_time;
-			if (adjust_time < 0) {
-				adjust_time = 0;
+			if (intended_sleep_time > 0) {
+				clock.delta();
+				Sleep(intended_sleep_time);
+				int long actual_sleep_time = clock.split();
+				// Update adjust_time only when we actually slept
+				adjust_time = actual_sleep_time - intended_sleep_time;
+				if (adjust_time < 0) {
+					adjust_time = 0;
+				}
 			}
+			else {
+				// Behind so sleep is skipped.
+				adjust_time = 0;
+				// avoids huge delta on next frame
+				clock.delta();
+			}
+			count++;	
 		}
 	}
 
