@@ -18,6 +18,7 @@
 #include "Circle.h"
 #include "Sound.h"
 #include "ViewObject.h"
+#include "QuitButton.h"
 
 int displayTest();
 void displayManagerTest();
@@ -170,6 +171,7 @@ int main() {
 	TestSaucer* saucer = new TestSaucer();
 	saucer->setPosition(df::Vector(35, 8));
 	saucer->setVelocity(df::Vector( - 0.25, 0));
+	new QuitButton();
 
 
 	game_manager.run();

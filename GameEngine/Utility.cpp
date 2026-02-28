@@ -129,8 +129,8 @@ namespace df {
 		Vector opCorner = Vector(b.getCorner().getX() + b.getHorizontal(),
 			b.getCorner().getY() + b.getVertical());
 
-		if (p.getX() > corner.getX() && p.getX() < opCorner.getX()) {
-			if (p.getY() > corner.getY() && p.getY() < opCorner.getY()) {
+		if (p.getX() >= corner.getX() && p.getX() <= opCorner.getX()) {
+			if (p.getY() >= corner.getY() && p.getY() <= opCorner.getY()) {
 				return true;
 			}
 		}

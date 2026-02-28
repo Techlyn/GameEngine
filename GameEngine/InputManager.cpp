@@ -102,15 +102,19 @@ namespace df {
 			else if (p_e->is <sf::Event::MouseButtonPressed>()) {
 				sf::Event::MouseButtonPressed* p_mse_event = 
 					reinterpret_cast<sf::Event::MouseButtonPressed*> (&e);
+				sf::Vector2i pixel_pos = p_mse_event->position;
+
+				Vector conv(pixel_pos.x / DM.charWidth(), pixel_pos.y / DM.charHeight());
 
 				sf::Mouse::Button button;
 				button = p_mse_event->button;
 				
-				EventMouse* mouse = new EventMouse;
+				EventMouse mouse;
 
-				mouse->setMouseButton(getDfButton(button));
-				mouse->setMouseAction(CLICKED);
-				onEvent(mouse);
+				mouse.setMousePosition(conv);
+				mouse.setMouseButton(getDfButton(button));
+				mouse.setMouseAction(CLICKED);
+				onEvent(&mouse);
 
 			}
 			if (GameManager::getInstance().getGameOver()) {
