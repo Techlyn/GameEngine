@@ -15,6 +15,7 @@
 #include "Line.h"
 #include "Object.h"
 #include "Circle.h"
+#include "EventKeyboard.h"
 
 
 
@@ -66,11 +67,20 @@ namespace df {
 		// Return distance between any two positions.
 		float distance(Vector p1, Vector p2);
 
+
+		// Converts World position to view position.
 		Vector worldToView(Vector world_pos);
 
+		// Converts View position to world position.
 		Vector viewToWorld(Vector view_pos);
 
+		// converts an integer to string.
 		std::string toString(int i);
+
+
+		// Converts key to a readable character.
+		char keyToChar(Keyboard::Key key, bool shiftPressed = false);
+
 
 		
 		

@@ -30,15 +30,12 @@ namespace df {
 
 	int ViewObject::draw() {
 		
-		std::string temp_str;
+		std::string temp_str{ "" };
 		
-		if (m_border) {
-			temp_str = " " + getViewString() + " " + toString(m_value) + " ";
-		}
-		else
-		{
-			temp_str = getViewString() + " " + toString(m_value);
-		}
+		if (m_border) temp_str += " ";
+		temp_str += getViewString();
+		if (m_draw_value) temp_str += " " + toString(m_value);
+		if (m_border) temp_str += " ";
 
 		// Draw centered at pos.
 		Vector pos = viewToWorld(getPosition());

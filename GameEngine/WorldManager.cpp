@@ -41,6 +41,11 @@ namespace df {
 		return instance;
 	}
 
+
+	SceneGraph& WorldManager::getSceneGraph() {
+		return scene_graph;
+	}
+
 	int WorldManager::startUp() {
 		if (isStarted()) return logAndReturn(LogManager::LOG_ERROR, "WorldManager already started");
 		

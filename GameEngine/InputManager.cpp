@@ -130,8 +130,10 @@ namespace df {
 		switch (key) {
 		case sf::Keyboard::Key::Space:
 			return Keyboard::Key::SPACE;
-		case sf::Keyboard::Key::Backspace:
+		case sf::Keyboard::Key::Enter:
 			return Keyboard::Key::RETURN;
+		case sf::Keyboard::Key::Backspace:
+			return Keyboard::Key::BACKSPACE;
 		case sf::Keyboard::Key::Escape:
 			return Keyboard::Key::ESCAPE;
 		case sf::Keyboard::Key::Tab:

@@ -35,7 +35,7 @@ namespace df {
 
 		std::string view_string;		// Label for value (e.g., "Points")
 		int m_value;					// Value displayed (e.g., points).
-		bool m_draw_value;				// Treu if should draw value.
+		bool m_draw_value;				// True if should draw value.
 		bool m_border;					// True if border around display.
 		Colour m_colour;					// Colour for text (and border).
 		ViewObjectLocation m_location;	// Location of ViewObject.
@@ -84,7 +84,7 @@ namespace df {
 		std::string getViewString() const;
 
 		// Set true to draw value with display string.
-		void setDrawValue(bool new_draw_value = true);
+		virtual void setDrawValue(bool new_draw_value = true);
 
 		// Get draw value( true if draw value with display string).
 		bool getDrawValue() const;

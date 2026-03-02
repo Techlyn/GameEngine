@@ -13,6 +13,8 @@ namespace df {
 		m_highlight_colour = RED;
 		m_default_colour = COLOUR_DEFAULT;
 
+		setDrawValue(false);
+
 		registeredInterest(MSE_EVENT);
 
 	}

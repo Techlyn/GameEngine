@@ -19,6 +19,7 @@
 #include "Sound.h"
 #include "ViewObject.h"
 #include "QuitButton.h"
+#include "NameEntry.h"
 
 int displayTest();
 void displayManagerTest();
@@ -165,6 +166,8 @@ int main() {
 
 	RM.loadSprite("saucer.txt", "saucer");
 	game_manager.startUp();
+
+	new NameEntry();
 
 	new Reticle();
 	new TestSaucer();

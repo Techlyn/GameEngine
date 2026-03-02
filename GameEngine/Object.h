@@ -43,6 +43,8 @@ namespace df {
 		int event_count;
 		std::string event_name[MAX_OBJ_EVENTS];
 
+		bool is_active;
+
 
 	public:
 		// Construct Object. Set default parameters and
@@ -149,6 +151,15 @@ namespace df {
 		// Unregister for interest in event.
 		// Return 0 if ok, else -1.
 		int unregisterInterest(std::string event_type);
+
+		// Set activeness of Object. Objects not active are not acted upon
+		// by engine.
+		// Return 0 if ok, else -1.
+		int setActive(bool active = true);
+
+		// Return activeness of Object. Objects not active are not acted upon
+		// by engine.
+		bool isActive() const;
 
 
 

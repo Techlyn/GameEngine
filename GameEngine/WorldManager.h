@@ -10,8 +10,10 @@
 #include "LogManager.h"
 #include "ObjectList.h"
 #include "Box.h"
+#include "SceneGraph.h"
 
 #define WM df::WorldManager::getInstance()
+
 
 
 namespace df {
@@ -43,12 +45,16 @@ namespace df {
 		
 		Object* p_view_following; // Object view is following.
 
+		SceneGraph scene_graph;	  // Storage for all Objects
+
 		
 
 
 	public:
 
 		static WorldManager& getInstance();
+
+		SceneGraph& getSceneGraph();
 
 		//Startup game world (initialize everything to empty).
 		// Return 0.

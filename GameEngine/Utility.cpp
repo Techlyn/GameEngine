@@ -236,4 +236,33 @@ namespace df {
 		return ss.str();
 	}
 	
+
+	char keyToChar(Keyboard::Key key, bool shiftPressed) {
+		// Letters A-Z
+		if (key >= Keyboard::A && key <= Keyboard::Z) {
+			char base = 'A' + (key - Keyboard::A);
+			return shiftPressed ? base : tolower(base);
+		}
+
+		// Number row key keys(NUM1 .. NUM0).
+		if (key >= Keyboard::NUM1 && key <= Keyboard::NUM0){
+			static const char digits[] = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+			return digits[key - Keyboard::NUM1];
+		}
+
+		switch (key) {
+		case Keyboard::SPACE: return ' ';
+		case Keyboard::PERIOD: return '.';
+		case Keyboard::COMMA: return ',';
+		case Keyboard::SLASH: return '/';
+		case Keyboard::MINUS: return '-';
+		case Keyboard::PLUS: return '+';
+		case Keyboard::GRAVE: return '`';
+		default: return '\0'; // non-printable
+		}
+	}
+
+
+
+	
 } // namespace df

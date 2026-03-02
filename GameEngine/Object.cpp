@@ -10,10 +10,14 @@
 #include "EventStep.h"
 #include "EventCollision.h"
 #include "EventOut.h"
+#include "SceneGraph.h"
+
 
 
 
 namespace df {
+
+	SceneGraph& scene_graph = WM.getSceneGraph();
 
 	Object::Object()
 	{
@@ -79,6 +83,8 @@ namespace df {
 			LM.writeLog(CLASS_NAME, LM.LOG_ERROR, "Error! incorrect altitude set");
 			return -1;
 		}
+		
+		scene_graph.updateAltitude(this, new_altitude);
 		m_altitude = new_altitude;
 		return 0; 
 
@@ -142,6 +148,7 @@ namespace df {
 			return -1;
 		}
 
+		scene_graph.updateSolidness(this, new_solid);
 		m_solidness = new_solid;
 		return 0;
 	}
@@ -213,6 +220,36 @@ namespace df {
 	
 
 		return 0;
+	}
+
+	int Object::unregisterInterest(std::string event_type) {
+		
+		if (event_type == STEP_EVENT) {
+			GM.unregisterInterest(this, event_type);
+		}
+		else if (event_type == KEYBOARD_EVENT || event_type == MSE_EVENT) {
+			IM.unregisterInterest(this, event_type);
+		}
+		else if (event_type == COLLISION_EVENT || event_type == OUT_EVENT) {
+			WM.unregisterInterest(this, event_type);
+		}
+		else
+			WM.unregisterInterest(this, event_type);
+
+		return 0;
+	}
+
+	int Object::setActive(bool active) {
+
+		// Update scene graph.
+		scene_graph.updateActive(this, active);
+		
+		// Set active value
+		is_active = active;
+	}
+
+	bool Object::isActive() const {
+		return is_active;
 	}
 
 }
