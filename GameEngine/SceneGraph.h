@@ -17,11 +17,11 @@ namespace df {
 
 		const std::string CLASS_NAME = "SceneGraph";
 
-		ObjectList active_objects;
-		ObjectList inactive_objects;
+		ObjectList active_objects;						// Active objects.
+		ObjectList inactive_objects;					// Inactive objects.
 
 		ObjectList m_solid_objects;						// Solid objects.
-		ObjectList m_visible_objects[MAX_ALTITUDE + 1];	// Visible objects
+		ObjectList m_visible_objects[MAX_ALTITUDE + 1];	// Visible objects.
 
 		
 

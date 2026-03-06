@@ -88,15 +88,7 @@ namespace df {
 		Vector view_pos = worldToView(world_pos);
 
 		// Convert space to pizels
-		Vector pixel_pos = spaceToPixels(view_pos);
-
-		// Draw background rectangle since text is "see through" in SFML.
-		/*static sf::RectangleShape rectangle;
-		rectangle.setSize(sf::Vector2f(charWidth(), charHeight()));
-		rectangle.setFillColor(WINDOW_BACKGROUND_COLOUR_DEFAULT);
-		rectangle.setPosition(sf::Vector2f({ pixel_pos.getX() - charWidth() / 10},
-			{ pixel_pos.getY() + charHeight() / 5}));
-		m_p_window->draw(rectangle);*/
+		Vector pixel_pos = spaceToPixels(view_pos); 
 
 		// Create character text to draw.
 		static sf::Text text(m_font); 

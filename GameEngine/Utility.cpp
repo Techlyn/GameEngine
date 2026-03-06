@@ -118,7 +118,7 @@ namespace df {
 	}
 
 	bool valueInRange(float value, float min, float max) {
-		if (value > min && value < max) {
+		if (value >= min && value <= max) {
 			return true;
 		}
 		return false;
@@ -184,6 +184,9 @@ namespace df {
 
 			return true; // if any cases are true.
 		}
+
+		// if no intersect.
+		return false;
 	
 	}
 

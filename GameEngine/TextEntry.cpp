@@ -1,4 +1,4 @@
-//
+﻿//
 // TextEntry.cpp
 //
 
@@ -22,7 +22,7 @@ namespace df {
 		m_cursor_char = '|';
 		m_blink_rate = 16;
 
-		m_hasFocus = false;
+		m_hasFocus = true;
 		m_cursorVisible = true;
 		m_blinkCounter = 0;
 
@@ -203,22 +203,34 @@ namespace df {
 		// Draw
 		ViewObject::draw();
 
-		// Restore original view string.
-		setViewString(view_str);
+		
+		
 
 		// If focused and cursor should be visible, draw it.
 		if (m_hasFocus && m_cursorVisible) {
 			Vector pos = getPosition();
-
-			// Calculate cursors' X offset: width of text before cursor.
-			pos.setX(pos.getX() + m_cursor);
 			
 
+			// Total width of drawn text (in characters)
+			int totalWidth = view_str.length() + m_text.length();
+
+			// Left most edge X coordinate (center minus half the total width of text).
+			float leftX = pos.getX() - totalWidth / 2.0f;
+
+			// adds the left most edge and the length of the text + m_cursor location 
+			// m_cursor changes depending if text is entered.
+			float cursorX = leftX + view_str.length() + m_cursor;
+
+			// puts the cursor at the coordinate.
+			pos.setX(cursorX);
 			
 
-			// Draw tghe cursor character
+			// Draw the cursor character
 			DM.drawCh(pos, getCursorChar(), this->getColour());
 		}
+
+		// Restore original view string.
+		setViewString(view_str);
 
 		return 0;
 	}

@@ -39,7 +39,7 @@ public:
 Reticle::Reticle() {
 	setType("Reticle");
 	setAltitude(df::MAX_ALTITUDE);
-	setSolidness(df::HARD);
+	setSolidness(df::SPECTRAL);
 	df::Vector p(0, 0);
 	registeredInterest(df::MSE_EVENT);
 	registeredInterest(df::STEP_EVENT);
@@ -79,6 +79,8 @@ int Reticle::eventHandler(const df::Event* p_e) {
 		}
 		return 1;
 	}
+
+	return 0;
 }
 
 class TestSaucer : public df::Object {	

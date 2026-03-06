@@ -7,7 +7,6 @@
 
 // Engine includes
 #include "Manager.h"
-#include "LogManager.h"
 #include "ObjectList.h"
 #include "Box.h"
 #include "SceneGraph.h"
@@ -26,7 +25,6 @@ namespace df {
 
 	private:
 
-		static LogManager& log;
 		const std::string CLASS_NAME = "WorldManager";
 		int logAndReturn(LogManager::LogLevel level, const char* message);
 
@@ -72,7 +70,7 @@ namespace df {
 		int removeAllObjects();
 
 		// Return list of all Objects in world.
-		ObjectList getAllObjects() const;
+		ObjectList getAllObjects(bool inactive=false) const;
 
 		// Return list of all Objects in world matching type.
 		ObjectList objectsOfType(std::string type);

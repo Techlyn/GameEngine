@@ -36,6 +36,9 @@ namespace df {
 		m_solidness = Solidness::HARD;
 		m_no_soft = false;
 
+		is_active = true;
+		is_visible = true;
+
 		event_count = 0;
 
 		WorldManager::getInstance().insertObject(this);
@@ -246,10 +249,28 @@ namespace df {
 		
 		// Set active value
 		is_active = active;
+
+		return 0;
+
 	}
 
 	bool Object::isActive() const {
 		return is_active;
+	}
+
+	int Object::setVisible(bool visible) {
+
+		// Update scene graph.
+		scene_graph.updateVisible(this, visible);
+
+		// Set visible value.
+		is_visible = visible;
+
+		return 0;
+	}
+
+	bool Object::isVisible() const {
+		return is_visible;
 	}
 
 }

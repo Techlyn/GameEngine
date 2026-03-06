@@ -44,6 +44,7 @@ namespace df {
 		std::string event_name[MAX_OBJ_EVENTS];
 
 		bool is_active;
+		bool is_visible;
 
 
 	public:
@@ -160,6 +161,13 @@ namespace df {
 		// Return activeness of Object. Objects not active are not acted upon
 		// by engine.
 		bool isActive() const;
+
+		// Set visibility of Object. Objects invisible are not drawn.
+		// Return 0 if ok, else -1.
+		int setVisible(bool visible = true);
+
+		// Return visibility of Object. Objects not visible are not drawn.
+		bool isVisible() const;
 
 
 

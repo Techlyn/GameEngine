@@ -4,9 +4,9 @@
 using namespace df;
 
 NameEntry::NameEntry() {
-	setViewString("Enter initials: ");
+	setViewString("Text Example: ");
 	setLocation(df::CENTER_CENTER);
-	setLimit(3);
+	setLimit(90);
 }
 
 void NameEntry::callback() {

@@ -4,6 +4,7 @@
 
 // engine includes
 #include "WorldManager.h"
+#include "LogManager.h"
 #include "DisplayManager.h"
 #include "Utility.h"
 #include "EventCollision.h"
@@ -12,14 +13,12 @@
 
 namespace df {
 
-	LogManager& WorldManager::log = LogManager::getInstance();
-	
 
 	WorldManager::WorldManager() {
 		
 		
 
-		log.writeLog(CLASS_NAME, LogManager::LOG_INFO, "%s: created at %p", __func__, this);
+		LM.writeLog(CLASS_NAME, LM.LOG_INFO, "%s: created at %p", __func__, this);
 
 		setType("WorldManager");
 		
@@ -47,10 +46,10 @@ namespace df {
 	}
 
 	int WorldManager::startUp() {
-		if (isStarted()) return logAndReturn(LogManager::LOG_ERROR, "WorldManager already started");
+		if (isStarted()) return logAndReturn(LM.LOG_ERROR, "WorldManager already started");
 		
 		Manager::startUp();
-		log.writeLog(LogManager::LOG_INFO, "%s: WorldManager has started", __func__);
+		LM.writeLog(LM.LOG_INFO, "%s: WorldManager has started", __func__);
 		return 0;
 		
 	}
@@ -69,9 +68,9 @@ namespace df {
 
 	int WorldManager::insertObject(Object* p_o) {
 		//Guard ifs
-		if (!isStarted()) return logAndReturn(LogManager::LOG_ERROR, "WorldManager not started");
-		if (p_o == nullptr) return logAndReturn(LogManager::LOG_ERROR, "Null object pointer");
-		if (m_updates.isFull()) return logAndReturn(LogManager::LOG_ERROR, "Update list is full");
+		if (!isStarted()) return logAndReturn(LM.LOG_ERROR, "WorldManager not started");
+		if (p_o == nullptr) return logAndReturn(LM.LOG_ERROR, "Null object pointer");
+		if (m_updates.isFull()) return logAndReturn(LM.LOG_ERROR, "Update list is full");
 
 //success path, updates the list with the object
 return m_updates.insert(p_o);
@@ -79,9 +78,9 @@ return m_updates.insert(p_o);
 
 	int WorldManager::removeObject(Object* p_o) {
 		//Guard ifs
-		if (!isStarted()) return logAndReturn(LogManager::LOG_ERROR, "WorldManager not started");
-		if (p_o == nullptr) return logAndReturn(LogManager::LOG_ERROR, "Null object pointer");
-		if (m_updates.isEmpty()) return logAndReturn(LogManager::LOG_ERROR, "Updates list is empty");
+		if (!isStarted()) return logAndReturn(LM.LOG_ERROR, "WorldManager not started");
+		if (p_o == nullptr) return logAndReturn(LM.LOG_ERROR, "Null object pointer");
+		if (m_updates.isEmpty()) return logAndReturn(LM.LOG_ERROR, "Updates list is empty");
 
 		// success path
 		return m_updates.remove(p_o);;
@@ -89,8 +88,8 @@ return m_updates.insert(p_o);
 
 	int WorldManager::removeAllObjects() {
 		//Guard ifs
-		if (!isStarted()) return logAndReturn(LogManager::LOG_ERROR, "WorldManager not started.");
-		if (m_deletions.isFull()) return logAndReturn(LogManager::LOG_ERROR, "Deletions list is full");
+		if (!isStarted()) return logAndReturn(LM.LOG_ERROR, "WorldManager not started.");
+		if (m_deletions.isFull()) return logAndReturn(LM.LOG_ERROR, "Deletions list is full");
 
 		for (int i = 0; i < m_updates.getCount(); i++) {
 			markForDelete(m_updates[i]);
@@ -100,8 +99,13 @@ return m_updates.insert(p_o);
 	}
 
 
-	ObjectList WorldManager::getAllObjects() const {
-		return m_updates;
+	ObjectList WorldManager::getAllObjects(bool inactive) const {
+		if (inactive) {
+			return scene_graph.activeObjects() + scene_graph.inactiveObjects();
+		}
+		else {
+			return scene_graph.activeObjects();
+		}
 	}
 
 	ObjectList WorldManager::objectsOfType(std::string type) {
@@ -148,9 +152,9 @@ return m_updates.insert(p_o);
 
 	int WorldManager::markForDelete(Object* p_o) {
 		//guards
-		if (!isStarted()) return logAndReturn(LogManager::LOG_ERROR, "WorldManager not started");
-		if (p_o == nullptr) return logAndReturn(LogManager::LOG_ERROR, "Null object pointer");
-		if (m_deletions.isFull()) return logAndReturn(LogManager::LOG_ERROR, "Deletions list is full --- IF REACHED HERE check if update() is added");
+		if (!isStarted()) return logAndReturn(LM.LOG_ERROR, "WorldManager not started");
+		if (p_o == nullptr) return logAndReturn(LM.LOG_ERROR, "Null object pointer");
+		if (m_deletions.isFull()) return logAndReturn(LM.LOG_ERROR, "Deletions list is full --- IF REACHED HERE check if update() is added");
 
 		for (int i = 0; i < m_deletions.getCount(); i++) {
 			if (m_deletions[i] == p_o) { // found
@@ -164,7 +168,7 @@ return m_updates.insert(p_o);
 
 
 	int WorldManager::logAndReturn(LogManager::LogLevel level, const char* message) {
-		log.writeLog(CLASS_NAME, level, "%s: %s", __func__, message);
+		LM.writeLog(CLASS_NAME, level, "%s: %s", __func__, message);
 		return -1;
 	}
 

@@ -64,8 +64,10 @@ namespace df {
            if (event[i] == p_e->getType()) {
                for (int j = 0; j < obj_list[i].getCount(); j++) {
                    ObjectList o_l = obj_list[i];
-                   o_l[j]->eventHandler(p_e);
-                   ++count;
+                   if (o_l[j]->isActive()) {
+                       o_l[j]->eventHandler(p_e);
+                       ++count;
+                   }
                }
            }
 

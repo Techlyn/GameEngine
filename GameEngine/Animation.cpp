@@ -76,6 +76,7 @@ namespace df {
 			setIndex(index);
 		}
 		setSlowdownCount(count);
+		return 0;
 		
 	}
 

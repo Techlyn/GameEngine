@@ -25,7 +25,7 @@ namespace df {
 		setColour(COLOUR_DEFAULT);
 
 		// Register interest in view events.
-		registeredInterest(VIEW_EVENT); //EventView.h not yet implemented
+		registeredInterest(VIEW_EVENT); 
 	}
 
 	int ViewObject::draw() {
